@@ -1,0 +1,483 @@
+@font-face { font-family: lexend; 
+  src: url('../fonts/Lexend/static/Lexend-Medium.ttf'); 
+} 
+
+@font-face { font-family: archivoNarrow; 
+  src: url('../fonts/Archivo_Narrow/ArchivoNarrow-Italic-VariableFont_wght.ttf'); 
+} 
+
+@font-face { font-family: nunito; 
+  src: url('../fonts/Nunito_Sans/NunitoSans-VariableFont_YTLC\,opsz\,wdth\,wght.ttf'); 
+} 
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a{
+  text-decoration: none;
+}
+
+a:link, a:visited {
+  color: black;
+}
+
+a:hover{
+  color: #b183ff !important; /* Hover color */
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+
+}
+
+html, body {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;  /* Prevent overflow inside the container */
+}
+
+.header {
+  z-index: 2; /* Make sure the text is above the canvas */
+  position: relative; /* Make it stack on top */
+  width: 100%;
+  padding: 20em 4em;
+}
+
+h1 {
+  font-family: lexend;
+  font-size: 8vw;
+  font-weight: lighter;
+  text-align: left;
+  z-index: 2; /* Make sure the heading is above the canvas */
+  color: aliceblue;
+}
+
+h2 {
+  font-family: archivoNarrow;
+  font-size: 2vw;
+  font-weight: lighter;
+  text-align: left;
+  z-index: 2; /* Make sure the heading is above the canvas */
+  color: aliceblue;
+}
+
+h3 {
+  font-family: nunito;
+  font-size: 1.5vw;
+  font-weight: 600;
+  text-align: left;
+  z-index: 2; /* Make sure the heading is above the canvas */
+  color: rgb(0, 0, 0);
+}
+
+.row h2{
+  color:black;
+  font-size: 4vw;
+}
+
+.row p{
+  font-family: nunito;
+  font-weight: 200;
+  font-size: 1vw;
+  line-height: 1.6;  /* 1.5 to 2 is a comfortable range */
+  padding: 5% 5% 0% 0%;
+}
+
+.row {
+  width: 75%;
+  margin: 0 auto;
+  padding: 2em;
+  display: flex;
+  opacity: 0; /* Initially hidden */
+  transform: translateY(50px); /* Initially moved down */
+  transition: opacity 1s ease, transform 1s ease; /* Smooth transition */
+  /* margin-bottom: 5%; */
+}
+
+.row.show {
+  opacity: 1; /* Fully visible */
+  transform: translateY(0); /* Moved back to normal position */
+}
+
+/* .row:nth-child(3),
+.row:nth-child(5),
+.row:nth-child(7) {
+  justify-content: flex-end;
+}
+
+.row:last-child {
+  padding-bottom: 10em;
+} */
+
+.text{
+  width: 100%;
+}
+
+.img {
+  position: relative;
+  width: 500px;
+  height: 625px;
+  z-index: 2;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+@media(max-width: 900px){
+  h1 {
+    font-size: 15vw;
+  }
+
+  .row {
+    width: 100%;
+  }
+
+  .img {
+    height: 500px;
+  }
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #0e0e0e;
+  color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 15px 0;
+  z-index: 1000;
+}
+
+.navbar nav ul {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+}
+
+.navbar nav ul li {
+  margin: 0 20px;
+}
+
+.navbar nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-family: archivoNarrow;
+  font-size: 1vw;
+  font-weight: 200;
+  transition: color 0.3s ease; /* Subtle hover effect */
+}
+
+.navbar nav ul li a:hover {
+  color: #b183ff; /* Hover color */
+}
+
+/* Style changes when navbar is sticky */
+.navbar.sticky {
+  background-color: #222; /* Darker background when sticky */
+}
+
+/* To avoid the navbar overlapping content */
+body {
+  padding-top: 70px; /* Adjust based on navbar height */
+}
+
+.icons {
+  margin-top: 5%;
+  gap: 20px; /* Space between icons */
+  position: absolute;
+  font-size: 2rem; /* Increase icon size */
+  color: white; /* Set icon color to white */
+  z-index: 3;
+  display: flex; /* Align icons horizontally */
+}
+
+.iconsText{
+  gap: 30px; /* Space between icons */
+  display: flex; /* Align icons horizontally */
+  margin-top: 3%;
+}
+
+.icons a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.icons i {
+  transition: color 0.3s ease;
+}
+
+.icons a:hover i {
+  color: #b183ff; /* Darker LinkedIn hover color */
+}
+
+.gradient-box {
+  margin-left: 5%;
+  width: 100%;
+  /* height: 50vh; */
+  background: linear-gradient(135deg, #1e46fa, #fa1ece, #00d4ff);
+  background-size: 200% 200%;  /* Larger background size for smooth animation */
+  animation: gradientShift 6s ease infinite;  /* Animation applied */
+}
+
+.gradient-box2 {
+  margin-right: 5%;
+  width: 50%;
+  background: linear-gradient(135deg, #eeeeee, #828282, #000000);
+  background-size: 200% 200%;  /* Larger background size for smooth animation */
+  animation: gradientShift 6s ease infinite;  /* Animation applied */
+}
+
+/* Keyframes for shifting gradient */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding: 40px;
+}
+
+.card {
+  width: 300px;
+  /* border-radius: 12px; */
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.card-content {
+  padding: 20px;
+  text-align: center;
+}
+
+.card-content h3 {
+  font-family: 'Lexend', sans-serif;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.card-content p {
+  font-family: 'Archivo Narrow', sans-serif;
+  font-size: 1em;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Hover Effect */
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+
+#Projects{
+  display:block;
+}
+
+.line {
+  width: 0;
+  height: 5px;
+  background: linear-gradient(135deg, #1e46fa, #7a1efa, #00d4ff);
+  margin: 5% 0% 5% 0%;
+  transition: width 0.4s ease-out;
+}
+
+.see-more {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 20px;
+  cursor: pointer;
+  font-family: archivoNarrow;
+  font-size: 1.2vw;
+  color: #000000;
+  transition: transform 0.3s ease;
+}
+
+.see-more:hover {
+  transform: translateX(10px);  /* Moves arrow slightly on hover */
+  color: #b183ff;
+
+}
+
+.arrow {
+  font-size: 1.5vw;
+  margin-left: 10px;
+}
+
+.image-card-container {
+  display: flex;
+  gap: 1em;  /* Spacing between cards */
+  justify-content: center;  /* Center align */
+  flex-wrap: wrap;  /* Wrap on smaller screens */
+  margin-top: 2em;
+}
+
+.image-card {
+  width: 30%;
+  overflow: hidden;
+  /* border-radius: 10px;  Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* Ensure images fill the card */
+}
+
+.image-card:hover {
+  transform: translateY(-10px);  /* Lift effect on hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);  /* Stronger shadow on hover */
+}
+
+#foot{
+  align-items: right;
+  margin-right:-2%;
+}
+
+/*PROJECTS PAGE*/
+:root {
+  --no-of-slides: 6;
+  --slides-in-view: 4;
+  --slide-width: 33vw; /* Adjust the width to fit your needs */
+  --slide-height: 40vh; /* Adjust the height to fit your needs */
+  --iteration-time: 15s; /* Time for one full cycle of scrolling */
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(var(--slide-width) * var(--no-of-slides) * -1));
+  }
+}
+
+.carousel {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  width: calc(var(--slides-in-view) * var(--slide-width)); /* Shows the number of slides in view */
+  margin: 0 auto;
+}
+
+.carousel-inner {
+  display: flex;
+  animation: scroll var(--iteration-time) linear infinite; /* Continuous scrolling */
+  width: calc(var(--no-of-slides) * var(--slide-width)); /* Width to fit all slides */
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  width: var(--slide-width);
+  height: var(--slide-height);
+  box-sizing: border-box;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Make sure the image covers the whole slide */
+  object-position: top; /* Align image to the top */
+}
+
+.image-row {
+  display: flex;  /* Display images in a row */
+  gap: 10px;  /* Minimal gap between images */
+  justify-content: center;  /* Center the images */
+  width: 100%;  /* Ensure the images span full width */
+}
+
+.image-row img {
+  width: 100%;  /* Ensure images take up full width */
+  height: auto;  /* Maintain aspect ratio of images */
+  max-width: 100%;  /* Prevent images from exceeding their container's width */
+}
+
+.scrollable-container {
+  display: flex;
+  width: 100%;
+  max-height: 800px; /* Adjust based on your preference */
+  overflow: hidden; /* Hide overflow content of the whole container */
+}
+
+.scrollable-column {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Allow scrolling in the y direction */
+  width: 50%; /* Each column takes up half the width */
+  height: 100%; /* Full height of the parent container */
+  padding-right: 10px; /* Space between columns */
+  box-sizing: border-box; /* Include padding in the width */
+}
+
+.scrollable-column img {
+  width: 100%; /* Ensure images take up full width */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 10px; /* Add spacing between images */
+  object-fit: cover; /* Ensure images scale appropriately */
+}
