@@ -31,10 +31,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
 window.addEventListener('scroll', () => {
   const line = document.querySelector('.line');
-  const scrollTop = window.scrollY;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const scrollPercent = (scrollTop / docHeight) * 100;
+  if (line) {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
 
-  // Extend line width based on scroll percentage
-  line.style.width = scrollPercent + '%';
+    // Extend line width based on scroll percentage
+    line.style.width = scrollPercent + '%';
+  }
 });
