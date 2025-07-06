@@ -481,3 +481,345 @@ body {
   margin-bottom: 10px; /* Add spacing between images */
   object-fit: cover; /* Ensure images scale appropriately */
 }
+
+/* Instagram-style Carousel */
+.instagram-carousel {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.carousel-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  font-family: archivoNarrow;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.carousel-header::before {
+  content: '\f004';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  color: #e91e63;
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  height: 100%;
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: #f8f9fa;
+}
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background: #fff;
+  border-top: 1px solid #f0f0f0;
+}
+
+.carousel-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-btn:hover {
+  background: #f8f9fa;
+  color: #333;
+}
+
+.carousel-btn:active {
+  transform: scale(0.95);
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: #666;
+  transform: scale(1.2);
+}
+
+.dot:hover {
+  background: #999;
+}
+
+.carousel-caption {
+  text-align: left;
+  margin-top: 12px;
+  font-family: nunito;
+  font-size: 13px;
+  color: #262626;
+  line-height: 1.6;
+  padding: 0 16px 16px 16px;
+  font-weight: 400;
+  letter-spacing: 0.1px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.carousel-caption::before {
+  content: '\f075';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 400;
+  font-size: 14px;
+  color: #8e8e8e;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* Responsive design for carousel */
+@media (max-width: 768px) {
+  .instagram-carousel {
+    max-width: 100%;
+    margin: 0 10px;
+  }
+  
+  .carousel-container {
+    height: 400px;
+  }
+  
+  .carousel-controls {
+    padding: 10px 15px;
+  }
+  
+  .carousel-btn {
+    font-size: 16px;
+    padding: 6px 10px;
+  }
+  
+  /* Stack carousels vertically on mobile */
+  .row[style*="display: flex"] {
+    flex-direction: column;
+    gap: 1em;
+  }
+  
+  .row[style*="display: flex"] .instagram-carousel {
+    max-width: 100%;
+    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-container {
+    height: 300px;
+  }
+  
+  .carousel-controls {
+    padding: 8px 12px;
+  }
+  
+  .carousel-btn {
+    font-size: 14px;
+    padding: 5px 8px;
+  }
+  
+  .dot {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+/* Lightbox/Modal Styles */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  cursor: pointer;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 10001;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.lightbox-close:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10001;
+}
+
+.lightbox-nav:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+.lightbox-prev {
+  left: 30px;
+}
+
+.lightbox-next {
+  right: 30px;
+}
+
+.lightbox-counter {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 16px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  border-radius: 20px;
+  z-index: 10001;
+}
+
+/* Make carousel images clickable */
+.carousel-slide {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.carousel-slide:hover {
+  transform: scale(1.02);
+}
+
+/* Responsive lightbox */
+@media (max-width: 768px) {
+  .lightbox-nav {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+  
+  .lightbox-prev {
+    left: 15px;
+  }
+  
+  .lightbox-next {
+    right: 15px;
+  }
+  
+  .lightbox-close {
+    top: 15px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+  }
+  
+  .lightbox-counter {
+    bottom: 20px;
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
