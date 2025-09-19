@@ -32,7 +32,8 @@ body {
   width: 100%;
   height: 100%;
   overflow-y: hidden;
-
+  margin: 0;
+  padding:0;
 }
 
 html, body {
@@ -49,6 +50,7 @@ img {
   width: 100%;
   height: 100%;
   overflow: hidden;  /* Prevent overflow inside the container */
+  flex: 1;
 }
 
 .header {
@@ -114,6 +116,12 @@ h3 {
   transform: translateY(0); /* Moved back to normal position */
 }
 
+.footer-row {
+  display: block !important; /* Override flex display for footer */
+  width: 100% !important; /* Full width for footer */
+  margin: 0 !important; /* Remove auto margin */
+}
+
 /* .row:nth-child(3),
 .row:nth-child(5),
 .row:nth-child(7) {
@@ -144,13 +152,222 @@ canvas {
   z-index: 1;
 }
 
-@media(max-width: 900px){
+/* Modern Media Queries for Responsive Design */
+
+/* Small screens - phones */
+@media screen and (width <= 480px) {
+  .header {
+    padding: 8rem 1rem;
+    min-height: 40vh;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    margin: 0;
+  }
+  
+  h2 {
+    font-size: 1.2rem;
+    line-height: 1.3;
+    margin: 0;
+  }
+  
+  .row h2 {
+    font-size: 1.8rem;
+  }
+  
+  .row p {
+    font-size: 0.9rem;
+  }
+  
+  .row {
+    width: 95%;
+    padding: 1rem;
+  }
+  
+  .navbar nav ul li a {
+    font-size: 0.9rem;
+  }
+  
+  .iconsText {
+    gap: 15px;
+  }
+  
+  .iconsText i {
+    font-size: 1.2rem;
+  }
+  
+  .see-more {
+    font-size: 1rem;
+  }
+  
+  .arrow {
+    font-size: 1.2rem;
+  }
+  
+  /* Push the tech section below the header */
+  .tech-section {
+    margin-top: 55vh;
+  }
+}
+
+/* Medium screens - tablets */
+@media screen and (width >= 481px) and (width <= 900px) {
+  .header {
+    padding: 12rem 2rem;
+    min-height: 45vh;
+  }
+  
+  h1 {
+    font-size: 3.5rem;
+    line-height: 1.1;
+    margin: 0;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+    line-height: 1.3;
+    margin: 0;
+  }
+  
+  .row h2 {
+    font-size: 2.5rem;
+  }
+  
+  .row p {
+    font-size: 1.1rem;
+  }
+  
+  .row {
+    width: 90%;
+    padding: 1.5rem;
+  }
+  
+  .navbar nav ul li a {
+    font-size: 1rem;
+  }
+  
+  .iconsText {
+    gap: 20px;
+  }
+  
+  .iconsText i {
+    font-size: 1.4rem;
+  }
+  
+  .see-more {
+    font-size: 1.1rem;
+  }
+  
+  .arrow {
+    font-size: 1.4rem;
+  }
+  
+  /* Push the tech section below the header */
+  .tech-section {
+    margin-top: 40vh;
+  }
+}
+
+/* Large screens - desktops */
+@media screen and (width >= 900px) {
+  .header {
+    padding: 20em 4em;
+    min-height: 60vh;
+  }
+  
+  h1 {
+    font-size: 8vw;
+  }
+  
+  h2 {
+    font-size: 2vw;
+  }
+  
+  .row h2 {
+    font-size: 4vw;
+  }
+  
+  .row p {
+    font-size: 1vw;
+  }
+  
+  .navbar nav ul li a {
+    font-size: 1vw;
+  }
+  
+  .see-more {
+    font-size: 1.2vw;
+  }
+  
+  .arrow {
+    font-size: 1.5vw;
+  }
+  
+  /* Push the tech section below the header */
+  .tech-section {
+    margin-top: 5vh;
+  }
+}
+
+/* Very large screens - 4K, ultrawide monitors */
+@media screen and (width >= 2000px) {
+  .header {
+    padding: 25em 5em;
+    min-height: 70vh;
+  }
+  
+  h1 {
+    font-size: 7vw;
+  }
+  
+  h2 {
+    font-size: 1.8vw;
+  }
+  
+  .row h2 {
+    font-size: 3.5vw;
+  }
+  
+  .row p {
+    font-size: 0.9vw;
+  }
+  
+  .navbar nav ul li a {
+    font-size: 0.9vw;
+  }
+  
+  .see-more {
+    font-size: 1.1vw;
+  }
+  
+  .arrow {
+    font-size: 1.4vw;
+  }
+  
+  /* Push the tech section below the header */
+  .tech-section {
+    margin-top: 10vh;
+  }
+
+  #footerContact {
+    margin-top: 7%;  
+  }
+}
+
+/* Legacy support for older browsers */
+@media(width >= 2000){
   h1 {
     font-size: 15vw;
   }
 
   .row {
     width: 100%;
+  }
+  
+  .tech-section {
+    margin-top: 25vh;
   }
 
   .img {
@@ -400,11 +617,11 @@ body {
 
 /*PROJECTS PAGE*/
 :root {
-  --no-of-slides: 6;
+  --no-of-slides: 10;
   --slides-in-view: 4;
   --slide-width: 33vw; /* Adjust the width to fit your needs */
   --slide-height: 40vh; /* Adjust the height to fit your needs */
-  --iteration-time: 15s; /* Time for one full cycle of scrolling */
+  --iteration-time: 20s; /* Time for one full cycle of scrolling */
 }
 
 @keyframes scroll {
@@ -412,7 +629,7 @@ body {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(var(--slide-width) * var(--no-of-slides) * -1));
+    transform: translateX(calc(var(--slide-width) * 6 * -1));
   }
 }
 
@@ -428,7 +645,7 @@ body {
 .carousel-inner {
   display: flex;
   animation: scroll var(--iteration-time) linear infinite; /* Continuous scrolling */
-  width: calc(var(--no-of-slides) * var(--slide-width)); /* Width to fit all slides */
+  width: calc(10 * var(--slide-width)); /* Width to fit all slides including duplicates */
 }
 
 .carousel-item {
