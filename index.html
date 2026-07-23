@@ -23,17 +23,18 @@
 </header>
 
 <body>
-  <!-- Canvas Element for WebGL -->
-  <canvas id="webglCanvas"></canvas>
-  <div class="container">
-    <div class="header">
+  <!-- Hero: 3D interactive desk canvas -->
+  <section class="hero-section">
+    <canvas id="webglCanvas"></canvas>
+
+    <div class="hero-text">
       <h1>hi. I'm Lillian! &#128075;</h1>
-      <h2>current junior @ Carnegie Mellon University.</h2>
+      <h2>current junior @ Carnegie Mellon University &nbsp;·&nbsp; Tech · Accessibility · Design</h2>
       <div class="icons">
-        <a href="https://www.linkedin.com/in/lillian-zhao-865383225/" target="_blank">
+        <a href="https://www.linkedin.com/in/lillian-zhao-865383225/" target="_blank" aria-label="LinkedIn">
           <i class="fab fa-linkedin"></i>
         </a>
-        <a href="https://github.com/lillian-zhao" target="_blank">
+        <a href="https://github.com/lillian-zhao" target="_blank" aria-label="GitHub">
           <i class="fab fa-github"></i>
         </a>
         <a href="mailto:lillian.m.zhao@gmail.com" aria-label="Email">
@@ -41,7 +42,18 @@
         </a>
       </div>
     </div>
-    <div class="row tech-section">
+
+    <div class="drag-hint">
+      <i class="fas fa-hand-pointer"></i>
+      drag the items on the desk!
+    </div>
+
+    <div class="scroll-arrow">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+  <div class="container">
+    <div class="row">
       <div>
         <h2>Tech + Accessibility + Design </h2>
         <div class="iconsText">
@@ -181,8 +193,8 @@
 
   <!-- WebGL and Lenis Script -->
   <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="script.js"></script> <!-- Link to your external JS file -->
-  <script src="canvasScript.js"></script>
+  <script src="js/script.js"></script> <!-- Link to your external JS file -->
+  <script src="js/canvasScript.js"></script>
 </body>
 
 </html>

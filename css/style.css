@@ -53,11 +53,94 @@ img {
   flex: 1;
 }
 
-.header {
-  z-index: 2; /* Make sure the text is above the canvas */
-  position: relative; /* Make it stack on top */
+/* ── Hero section ─────────────────────────────────────────────────────────── */
+.hero-section {
+  position: relative;
   width: 100%;
-  padding: 20em 4em;
+  height: calc(100vh - 70px);
+  background: linear-gradient(160deg, #e8f0fe 0%, #faf6f0 55%, #fef3e2 100%);
+  overflow: hidden;
+}
+
+#webglCanvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: block;
+}
+
+/* ── Hero text overlay ────────────────────────────────────────────────────── */
+.hero-text {
+  position: absolute;
+  bottom: 14%;
+  left: 5%;
+  z-index: 10;
+  pointer-events: none;
+}
+.hero-text h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  color: #1a1a2e;
+  line-height: 1.1;
+  margin: 0 0 0.3rem;
+}
+.hero-text h2 {
+  font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+  font-weight: 400;
+  color: #555;
+  margin: 0 0 1rem;
+}
+.hero-text .icons {
+  position: static;
+  display: flex;
+  gap: 1rem;
+  pointer-events: all;
+  font-size: 1.4rem;
+  color: #444;
+  margin-top: 0;
+}
+.hero-text .icons a { color: #444; }
+.hero-text .icons a:hover { color: #1e46fa !important; transform: translateY(-2px); }
+
+/* ── Drag hint ────────────────────────────────────────────────────────────── */
+.drag-hint {
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: rgba(60, 60, 80, 0.65);
+  pointer-events: none;
+  white-space: nowrap;
+  font-family: archivoNarrow;
+  animation: hintFade 4s ease-in-out 1.5s forwards;
+  opacity: 0;
+}
+@keyframes hintFade {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  20%  { opacity: 1; transform: translateX(-50%) translateY(0);   }
+  70%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ── Scroll arrow ─────────────────────────────────────────────────────────── */
+.scroll-arrow {
+  position: absolute;
+  bottom: 2.5%;
+  right: 4%;
+  z-index: 10;
+  color: rgba(60, 60, 80, 0.45);
+  font-size: 1.1rem;
+  pointer-events: none;
+  animation: bounce 2s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
 }
 
 h1 {
@@ -143,14 +226,7 @@ h3 {
   z-index: 2;
 }
 
-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
+/* canvas is handled by #webglCanvas inside .hero-section */
 
 /* Modern Media Queries for Responsive Design */
 
