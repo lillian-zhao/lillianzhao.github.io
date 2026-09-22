@@ -114,10 +114,23 @@ function openLightbox(carouselId, slideIndex) {
 
 function closeLightbox() {
   const lightbox = document.getElementById('lightbox');
+  if (!lightbox) return;
   lightbox.classList.remove('active');
   
   // Restore body scroll
   document.body.style.overflow = '';
+}
+
+function openProcessLightbox(index) {
+  const imgs = document.querySelectorAll('.impl-process img');
+  if (!imgs.length) return;
+  lightboxImages = Array.from(imgs).map(function(img) { return img.src; });
+  currentLightboxIndex = index;
+  showLightboxImage();
+  const lightbox = document.getElementById('lightbox');
+  if (!lightbox) return;
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
 
 function changeLightboxImage(direction) {
@@ -259,11 +272,18 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Close lightbox when clicking outside the image
   const lightbox = document.getElementById('lightbox');
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
-      closeLightbox();
-    }
+  if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+  }
+
+  document.querySelectorAll('.impl-process [data-lb]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var i = parseInt(btn.getAttribute('data-lb'), 10);
+      openProcessLightbox(i);
+    });
   });
-  
-  console.log(`Initialized ${allCarousels.length} carousels automatically!`);
 });

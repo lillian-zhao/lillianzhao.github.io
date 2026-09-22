@@ -82,24 +82,46 @@
         The iPhone app talks to a local photo server. Once connected, the same files show up in a Windows
         <b>PhotoLibrary</b> folder — no cloud upload required.
       </p>
-      <figure class="impl-shot-demo">
-        <img src="../../img/open-photos-shots/demo.gif" alt="Open Photos demo: connecting and syncing the photo library">
-        <figcaption>Connecting to the local server and syncing the library</figcaption>
-      </figure>
-      <div class="impl-shots">
-        <figure>
-          <img src="../../img/open-photos-shots/photos.png" alt="Open Photos library on iPhone">
-          <figcaption>Photos library on iPhone</figcaption>
-        </figure>
-        <figure>
-          <img src="../../img/open-photos-shots/settings.png" alt="Open Photos settings screen">
-          <figcaption>Settings — connected to the local server</figcaption>
+      <div class="impl-process">
+        <div class="impl-steps">
+          <figure>
+            <span class="impl-step">1</span>
+            <button type="button" class="impl-tile" data-lb="0" aria-label="Enlarge iPhone library screenshot">
+              <img src="../../img/open-photos-shots/photos.png" alt="Open Photos library on iPhone">
+            </button>
+            <figcaption>iPhone library</figcaption>
+          </figure>
+          <figure>
+            <span class="impl-step">2</span>
+            <button type="button" class="impl-tile" data-lb="1" aria-label="Enlarge settings screenshot">
+              <img src="../../img/open-photos-shots/settings.png" alt="Open Photos settings — connected to the local server">
+            </button>
+            <figcaption>Connect locally</figcaption>
+          </figure>
+          <figure>
+            <span class="impl-step">3</span>
+            <button type="button" class="impl-tile" data-lb="2" aria-label="Enlarge Windows folder screenshot">
+              <img src="../../img/open-photos-shots/folder.png" alt="PhotoLibrary folder on Windows">
+            </button>
+            <figcaption>Windows folder</figcaption>
+          </figure>
+        </div>
+        <div class="impl-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></div>
+        <figure class="impl-demo">
+          <span class="impl-step">4</span>
+          <div class="impl-tile">
+            <iframe
+              src="https://www.youtube.com/embed/fXgqePLmwyk?rel=0"
+              title="Open Photos demo"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <figcaption>Full demo</figcaption>
         </figure>
       </div>
-      <figure class="impl-shot-wide">
-        <img src="../../img/open-photos-shots/folder.png" alt="PhotoLibrary folder on Windows">
-        <figcaption>The same photos in the Windows PhotoLibrary folder</figcaption>
-      </figure>
     </div>
   </div>
 
@@ -130,6 +152,24 @@
 
   <div class="row" style="width:100%; background-color: black;">
     <h2 style="color:white;">footer.</h2>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-close" onclick="closeLightbox()">
+      <i class="fa-solid fa-times"></i>
+    </div>
+    <div class="lightbox-content">
+      <img class="lightbox-image" id="lightbox-image" src="" alt="Lightbox Image">
+    </div>
+    <div class="lightbox-nav lightbox-prev" onclick="changeLightboxImage(-1)">
+      <i class="fa-solid fa-chevron-left"></i>
+    </div>
+    <div class="lightbox-nav lightbox-next" onclick="changeLightboxImage(1)">
+      <i class="fa-solid fa-chevron-right"></i>
+    </div>
+    <div class="lightbox-counter" id="lightbox-counter">
+      1 / 1
+    </div>
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
