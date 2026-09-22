@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>lillianzhao</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link rel="icon" href="img/logo.jpg">
+  <script src="/js/loader.js"></script>
 </head>
 
 <header id="navbar" class="navbar">
@@ -23,7 +23,7 @@
 </header>
 
 <body>
-  <div class="container">
+  <div class="container" style="position:relative; z-index:2;">
     <div class="row" style="margin-top: 0%;" id="Projects">
       <div style="display:flex;">
         <h2>(some of)</h2>
@@ -36,202 +36,210 @@
       </div>
     </div>
   </div>
-  <div class="carousel" style="margin-top: 2%;">
-    <div class="carousel-inner">
-      <div class="carousel-item">
-        <img src="img/card9.png" alt="Image 9">
-      </div>
-      <div class="carousel-item">
-        <img src="img/card2.png" alt="Image 2">
-      </div>
-      <div class="carousel-item">
-        <img src="img/card3.png" alt="Image 3">
-      </div>
-      <div class="carousel-item">
-        <img src="img/card10.png" alt="Image 10">
-      </div>
-      <div class="carousel-item">
-        <img src="img/card5.png" alt="Image 5">
-      </div>
-      <div class="carousel-item">
-        <img src="img/card6.png" alt="Image 6">
-      </div>
-      <!-- Duplicate slides for seamless loop -->
-      <div class="carousel-item">
-        <img src="img/card9.png" alt="Image 9">
-      </div>
-      <div class="carousel-item">
-        <img src="img/card2.png" alt="Image 2">
-      </div>
-      <div class="carousel-item">
-        <img src="img/card3.png" alt="Image 3">
-      </div>
-      <div class="carousel-item">
-        <img src="img/card10.png" alt="Image 10">
+  <!-- 3D Rotating Carousel -->
+  <div class="pcd-section">
+    <div class="projects-carousel-3d">
+      <div class="pcd-rotation-direction">
+        <ul class="pcd-item-wrapper" style="--pcd-num-elements: 9">
+          <li class="pcd-item" style="--pcd-index: 1;"><img src="img/pcd/srts-phone.jpg" alt="SRTS Walkability Audit" width="800" height="450" decoding="async"></li>
+          <li class="pcd-item" style="--pcd-index: 2;"><img src="img/pcd/open-photos.jpg" alt="Open Photos" width="800" height="450" decoding="async"></li>
+          <li class="pcd-item" style="--pcd-index: 3;"><img src="img/pcd/oizys.jpg" alt="Oizys" width="800" height="422" decoding="async" style="object-fit:contain; background:#000;"></li>
+          <li class="pcd-item" style="--pcd-index: 4;"><img src="img/pcd/card3.jpg"  alt="Nothing Special But Special" width="800" height="525" decoding="async"></li>
+          <li class="pcd-item" style="--pcd-index: 5;"><img src="img/pcd/is-projects-laptop.jpg" alt="IS Projects" width="800" height="450" decoding="async"></li>
+          <li class="pcd-item" style="--pcd-index: 6;"><img src="img/card8.png" alt="TCinGC" width="800" height="450" decoding="async"></li>
+          <li class="pcd-item" style="--pcd-index: 7;"><img src="img/pcd/card10.jpg" alt="Wireframes" width="753" height="800" decoding="async"></li>
+          <li class="pcd-item" style="--pcd-index: 8;"><img src="img/pcd/hci1.jpg"   alt="Smartwatch" width="800" height="388" decoding="async"></li>
+          <li class="pcd-item" style="--pcd-index: 9;"><img src="img/pcd/hci2.jpg"   alt="Square Hole" width="800" height="403" decoding="async"></li>
+        </ul>
       </div>
     </div>
   </div>
-  <div class="row">
-    <!-- <div class="img"><img src="img/img2.JPG" alt="" /></div> -->
-    <div class="text" style="margin-top:5%;">
-      <h2>Coding Projects</h2>
-      <div class="iconsText">
-        <i class="fa-solid fa-heart"></i>
-        <i class="fa-solid fa-brush"></i>
-        <i class="fa-solid fa-cube"></i>
-      </div>
-      <p>
-       Some of my coding projects, though documentation is sometimes sparse.
-      </p>
-    </div>
-  </div>
-  <div class="card-container">
-    <a href="https://poem-app-one.vercel.app/" target="_blank">
-      <div class="card">
-        <img src="img/grad0.png" alt="Card 0">
-        <div class="card-content">
-          <h3>Poem App</h3>
-          <p>Utlized Flask, React, and Hugging Face API to implement a website that will take user parameters and write a poem about the subject.</p>
-        </div>
-      </div>
-    </a>
-    <a href="https://github.com/ScottyLabs/lost-and-found" target="_blank">
-      <div class="card">
-        <img src="img/grad2.png" alt="Card 2">
-        <div class="card-content">
-          <h3>Lost & Found</h3>
-          <p>Worked as a member of ScottyLabs to create a website for Lost and Found Items</p>
-        </div>
-      </div>
-    </a>
-    <a href="https://github.com/aliciach1/tartanhacks24" target="_blank">
-      <div class="card">
-        <img src="img/grad3.png" alt="Card 3">
-        <div class="card-content">
-          <h3>Gnotion</h3>
-          <p>Created a site similar to Notion for Planning called Gnotion <br> (Gnome themed)
-          </p>
-        </div>
-      </div>
-    </a>
-  </div>
-  <div class="row">
-    <!-- <div class="img"><img src="img/img2.JPG" alt="" /></div> -->
-    <div class="text" style="margin-top:5%;">
-      <h2>Website Design & Development</h2>
-      <div class="iconsText">
-        <i class="fa-solid fa-heart"></i>
-        <i class="fa-solid fa-brush"></i>
-        <i class="fa-solid fa-cube"></i>
-      </div>
-      <p>
-        I've had the opportunity to develop countless websites from scratch, leading me to be very familiar with the
-        wireframing, user-testing, and prototyping process.
-      </p>
-      <p>
-        Below are some of the projects I have worked on and their development process.
-      </p>
-    </div>
-  </div>
-  <div class="card-container">
-    <a href="pages/projects/cjministry.html">
-      <div class="card">
-        <img src="img/card1.png" alt="Card 1">
-        <div class="card-content">
-          <h3>2023_ CJ Ministry</h3>
-          <p>Iterated and built a website from scratch for local Pittsburgh nonprofit CJ Ministry.</p>
-        </div>
-      </div>
-    </a>
-    <a href="pages/projects/isProjects.html">
-      <div class="card">
-        <img src="img/card2.png" alt="Card 2">
-        <div class="card-content">
-          <h3>2024_ IS Projects</h3>
-          <p>Worked with Carnegie Mellon University to fabricate the IS Projects Website</p>
-        </div>
-      </div>
-    </a>
-    <a href="pages/projects/TCinGC.html">
-      <div class="card">
-        <img src="img/card8.png" alt="Card 3">
-        <div class="card-content">
-          <h3>2024_ TCinGC</h3>
-          <p>Collaborated with CMU IS website to update and manage CMU TCinGC website.
-          </p>
-        </div>
-      </div>
-    </a>
-    <a href="pages/projects/misc.html">
-      <div class="card">
-        <img src="img/card3.png" alt="Card 4">
-        <div class="card-content">
-          <h3>Misc Wireframes</h3>
-          <p>Extra little wireframes of websites I've done in various classes.
-          </p>
-          <br>
-        </div>
-      </div>
-    </a>
-  </div>
-  <div class="row">
-    <!-- <div class="img"><img src="img/img2.JPG" alt="" /></div> -->
-    <div class="text" style="margin-top:5%;">
-      <h2>HCI Projects</h2>
-      <div class="iconsText">
-        <i class="fa-solid fa-heart"></i>
-        <i class="fa-solid fa-brush"></i>
-        <i class="fa-solid fa-cube"></i>
-      </div>
-      <p>
-        In my constant journey to improve products in ways which actually allow individuals to
-        interact and utilize them better, I have done a number of projects centered around Human Computer
-        Interaction and specifically how to conduct user testing and iteration to improve these products.
-      </p>
-      <p>
-        Below are some examples of these types of projects I've worked on.
-      </p>
-    </div>
-  </div>
-  <div class="card-container">
-    <a href="pages/projects/backoff3.html">
-      <div class="card">
-        <img src="img/hci1.png" alt="Card 1">
-        <div class="card-content">
-          <h3>Smartwatch Keyboard</h3>
-          <p>Redesigned a keyboard better suited for small screens</p>
-        </div>
-      </div>
-    </a>
-    <a href="pages/projects/bakeoff2.html">
-      <div class="card">
-        <img src="img/hci2.png" alt="Card 2">
-        <div class="card-content">
-          <h3>The Square Hole</h3>
-          <p>Iterated to create a faster solution for a game where users resize and reposition a square.</p>
-        </div>
-      </div>
-    </a>
-    <a href="pages/projects/bakeoff1.html">
-      <div class="card">
-        <img src="img/HCI3.png" alt="Card 3">
-        <div class="card-content">
-          <h3>Cursor Accuracy</h3>
-          <p>Tested and refined a precision clicker game to improve time and score.
-          </p>
-        </div>
-      </div>
-    </a>
-  </div>
+  <!-- ══ Projects Gallery Grid ══ -->
+  <section class="pg-section">
+    <div class="pg-grid">
 
-  </div>
+      <!-- 00 · SRTS Walkability Audit System -->
+      <article class="pg-item">
+        <a class="pg-link" href="pages/projects/srts.html">
+          <div class="pg-img-wrap pg-img-srts"><img src="img/srts-phone-card.jpg" alt="Walkability Audit System"></div>
+          <div class="pg-meta">
+            <p class="pg-name">Walkability Audit System <span class="pg-year">2026</span></p>
+            <div class="pg-tags">
+              <span class="pg-tag t-gis">GIS</span>
+              <span class="pg-tag t-ai">AI/ML</span>
+              <span class="pg-tag t-civic">Civic Tech</span>
+              <span class="pg-tag t-web">Web</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 01 · Open Photos -->
+      <article class="pg-item">
+        <a class="pg-link" href="pages/projects/openPhotos.html">
+          <div class="pg-img-wrap"><img src="img/open-photos-card.jpg" alt="Open Photos"></div>
+          <div class="pg-meta">
+            <p class="pg-name">Open Photos <span class="pg-year">2026</span></p>
+            <div class="pg-tags">
+              <span class="pg-tag t-mobile">Mobile</span>
+              <span class="pg-tag t-hack">Hackathon</span>
+              <span class="pg-tag t-code">Coding</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 02 · Oizys -->
+      <article class="pg-item">
+        <a class="pg-link" href="pages/projects/oizys.html">
+          <div class="pg-img-wrap pg-img-oizys"><img src="img/oizys-card.jpg" alt="Oizys"></div>
+          <div class="pg-meta">
+            <p class="pg-name">Oizys <span class="pg-year">2025</span></p>
+            <div class="pg-tags">
+              <span class="pg-tag t-iot">IoT</span>
+              <span class="pg-tag t-hw">Hardware</span>
+              <span class="pg-tag t-cmu">CMU</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 04 · Nothing Special But Special (misc) -->
+      <article class="pg-item">
+        <a class="pg-link" href="pages/projects/misc.html">
+          <div class="pg-img-wrap"><img src="img/card3.png" alt="Nothing Special But Special"></div>
+          <div class="pg-meta">
+            <p class="pg-name">Misc Wireframes</p>
+            <div class="pg-tags">
+              <span class="pg-tag t-design">Design</span>
+              <span class="pg-tag t-wire">Wireframing</span>
+              <span class="pg-tag t-ux">UX</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 05 · IS Projects -->
+      <article class="pg-item">
+        <a class="pg-link" href="pages/projects/isProjects.html">
+          <div class="pg-img-wrap pg-img-srts"><img src="img/is-projects-laptop-card.jpg" alt="IS Projects"></div>
+          <div class="pg-meta">
+            <p class="pg-name">IS Projects <span class="pg-year">2024</span></p>
+            <div class="pg-tags">
+              <span class="pg-tag t-web">Web Dev</span>
+              <span class="pg-tag t-cmu">CMU</span>
+              <span class="pg-tag t-collab">Collaboration</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 06 · TCinGC -->
+      <article class="pg-item">
+        <a class="pg-link" href="pages/projects/TCinGC.html">
+          <div class="pg-img-wrap"><img src="img/card8.png" alt="TCinGC"></div>
+          <div class="pg-meta">
+            <p class="pg-name">TCinGC <span class="pg-year">2024</span></p>
+            <div class="pg-tags">
+              <span class="pg-tag t-web">Web Dev</span>
+              <span class="pg-tag t-ux">UX</span>
+              <span class="pg-tag t-cmu">CMU</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 08 · Smartwatch Keyboard -->
+      <article class="pg-item">
+        <a class="pg-link" href="pages/projects/backoff3.html">
+          <div class="pg-img-wrap"><img src="img/hci1.png" alt="Smartwatch Keyboard"></div>
+          <div class="pg-meta">
+            <p class="pg-name">Smartwatch Keyboard</p>
+            <div class="pg-tags">
+              <span class="pg-tag t-hci">HCI</span>
+              <span class="pg-tag t-ux">Interaction Design</span>
+              <span class="pg-tag t-research">Research</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 09 · The Square Hole -->
+      <article class="pg-item">
+        <a class="pg-link" href="pages/projects/bakeoff2.html">
+          <div class="pg-img-wrap"><img src="img/hci2.png" alt="The Square Hole"></div>
+          <div class="pg-meta">
+            <p class="pg-name">The Square Hole</p>
+            <div class="pg-tags">
+              <span class="pg-tag t-hci">HCI</span>
+              <span class="pg-tag t-game">Game Design</span>
+              <span class="pg-tag t-iter">Iteration</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+      <!-- 10 · Cursor Accuracy -->
+      <article class="pg-item">
+        <a class="pg-link" href="pages/projects/bakeoff1.html">
+          <div class="pg-img-wrap"><img src="img/HCI3.png" alt="Cursor Accuracy"></div>
+          <div class="pg-meta">
+            <p class="pg-name">Cursor Accuracy</p>
+            <div class="pg-tags">
+              <span class="pg-tag t-hci">HCI</span>
+              <span class="pg-tag t-research">Research</span>
+              <span class="pg-tag t-iter">Iteration</span>
+            </div>
+          </div>
+        </a>
+      </article>
+
+    </div>
+  </section>
   <div class="row" style="width:100%; background-color: black;">
     <h2 style="color:white;">footer.</h2>
   </div>
-  <!-- WebGL and Lenis Script -->
-  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <!-- Lenis + page scripts (Three.js only loads on the home canvas) -->
   <script src="js/script.js"></script>
-  <script src="js/carousel.js"></script>
+
+  <!-- 3D carousel: CSS animation (GPU) — pause when off-screen -->
+  <script>
+    (function () {
+      var root = document.querySelector('.projects-carousel-3d');
+      if (!root || !window.IntersectionObserver) return;
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduceMotion) {
+        root.classList.add('is-paused');
+        return;
+      }
+      new IntersectionObserver(function (entries) {
+        root.classList.toggle('is-paused', !entries[0].isIntersecting || document.hidden);
+      }, { threshold: 0.05 }).observe(root);
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) root.classList.add('is-paused');
+      });
+    })();
+  </script>
+
+  <!-- Projects grid scroll-reveal -->
+  <script>
+    (function () {
+      var items = document.querySelectorAll('.pg-item');
+      if (!items.length || !window.IntersectionObserver) {
+        items.forEach(function (el) { el.classList.add('pg-visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('pg-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+      items.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
 
 </body>
 

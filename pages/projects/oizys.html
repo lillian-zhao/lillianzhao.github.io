@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lillianzhao – Oizys</title>
+  <link rel="stylesheet" href="../../css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="../../img/logo.jpg">
+  <script src="/js/loader.js"></script>
+</head>
+
+<header id="navbar" class="navbar">
+  <nav>
+    <ul>
+      <li><a href="../../index.html">home</a></li>
+      <li><a href="../../projects.html">projects</a></li>
+      <li><a href="../../contactMe.html">contact</a></li>
+      <li><a href="../../funsies.html">funsies</a></li>
+    </ul>
+  </nav>
+</header>
+
+<body>
+  <div class="container">
+    <div class="row" style="margin-top: 0%;" id="Projects">
+      <div style="display:flex;">
+        <h2>(IoT)</h2>
+        <h1 style="color:black; font-size: 5.2vw;">Oizys.</h1>
+        <div class="iconsText">
+          <i class="fa-solid fa-heart-pulse"></i>
+          <i class="fa-solid fa-microchip"></i>
+          <i class="fa-solid fa-gem"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row show" style="margin-top: -2%; flex-direction: column;">
+    <div class="text">
+      <h2>MVP Demo.</h2>
+    </div>
+    <div class="demo-split">
+      <div class="demo-split-img">
+        <img src="../../img/oizys.jpg" alt="Oizys stress bracelet with glowing beads">
+      </div>
+      <div class="demo-split-video">
+        <iframe
+          src="https://www.youtube.com/embed/1r-R7cgawUQ"
+          title="Oizys MVP Demo"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text">
+      <h2>Context.</h2>
+      <p>
+        Oizys is a stress bracelet I designed and built with Karis for <b>49-313 Designing for the Internet of
+        Things</b> (Fall 2025). Nearly half of U.S. adults say stress has negatively affected their behavior, and
+        long-term stress is easy to miss — especially in competitive environments where being constantly on edge
+        starts to feel normal.
+      </p>
+      <p>
+        Smartwatches already dump heart-rate data on you. That is often bulky, flashy, and more numbers than anyone
+        asked for. We wanted the opposite: an ambient accessory that looks like jewelry and only nudges you when
+        stress is actually present.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text">
+      <h2>The Problem.</h2>
+      <p>
+        Stress starts from internal and external pressure. In cutthroat settings it gets treated as the default, so
+        people stop noticing it. Symptoms show up as fatigue, irritability, or muscle tension — easy to ignore,
+        expensive over time.
+      </p>
+      <p>
+        Existing wearables tend to add cognitive load. More charts, more choice, sometimes more stress. Oizys is a
+        nudge, not a dashboard on your wrist.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text">
+      <h2>The Bracelet.</h2>
+      <p>
+        Semi-transparent beads with embedded LEDs, a heart-rate sensor, a motion sensor, macrame cord to hide
+        wiring, an adjustable knot, and a Wi-Fi microcontroller. Elevated heart rate with little to no movement
+        reads as stress: the beads glow red. Otherwise they stay green.
+      </p>
+      <div class="img" style="width:70%; max-width:520px; height:auto; margin: 1.5rem auto 0;">
+        <img src="../../img/oizys-bracelet.png" alt="Oizys bracelet concept drawing" style="object-fit:contain; height:auto; width:100%;">
+      </div>
+      <p>
+        Heart rate alone is a noisy signal — exercise looks a lot like stress. Pairing it with motion cuts false
+        positives. (Heart-rate variability is a well-studied stress marker; we used heart rate plus stillness as a
+        prototype stand-in.)
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text">
+      <h2>How it decides.</h2>
+      <p>
+        <b>Motion</b> from an ADXL335 accelerometer.<br>
+        <b>Heart rate</b> from a MAX30102 sensor.<br>
+        If heart rate is high <b>and</b> motion is low, the bracelet lights red and the companion app marks
+        <i>Stressed</i>. Otherwise it lights green.
+      </p>
+      <p>
+        Data flows ESP32 &rarr; Wi-Fi &rarr; a small backend (sensor API) &rarr; a React app that shows stress level
+        and duration, without asking the wearer to log anything.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text">
+      <h2>Why this form.</h2>
+      <p>
+        Plenty of people dislike smartwatches because they look technical. Oizys borrows the shape of something
+        people already wear: a beaded bracelet. No on-device interface — the wearable is enchanted, not a tiny
+        screen. The glow is meant to be glanceable, not a notification stack.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text">
+      <h2>Challenges.</h2>
+      <p>
+        The first heart-rate sensor would not calibrate reliably — we swapped hardware and changed how BPM was
+        calculated. An oversized remote power supply shorted parts of the circuit; we added a transistor and
+        worked with course staff to debug the chip. The prototype housing is still larger than a finished piece of
+        jewelry: the sensors do not yet hide cleanly inside the beads.
+      </p>
+      <p>
+        Next: HRV against a personal baseline (the app currently tracks BPM, not long-term variability), plus a
+        smaller, sleeker build.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text">
+      <h2>Technology.</h2>
+      <p>
+        ESP32 &middot; ADXL335 &middot; MAX30102 &middot; LED strip / bead LEDs &middot; Python backend
+        (localhost API) &middot; React companion app
+      </p>
+    </div>
+  </div>
+
+  <div class="row" style="flex-direction: column;">
+    <div class="text">
+      <h2>Presentation.</h2>
+      <p>
+        <a href="../../files/Oizys-Final-Presentation.pdf" target="_blank">
+          <u>Open the full slides (PDF)</u> &#8594;
+        </a>
+      </p>
+    </div>
+    <div class="slide-deck" id="oizys-deck" tabindex="0"
+      data-count="25"
+      data-src="../../img/oizys-slides/slide-{n}.jpg"
+      data-label="Oizys presentation slide">
+      <div class="slide-deck-stage">
+        <img id="oizys-slide" src="../../img/oizys-slides/slide-01.jpg" alt="Oizys presentation slide 1 of 25">
+        <button type="button" class="slide-deck-nav prev" aria-label="Previous slide">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button type="button" class="slide-deck-nav next" aria-label="Next slide">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+      <div class="slide-deck-bar">
+        <span id="oizys-slide-label">1 / 25</span>
+        <div class="slide-deck-dots" id="oizys-slide-dots"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="width:100%; background-color: black;">
+    <h2 style="color:white;">footer.</h2>
+  </div>
+
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="../../js/script.js"></script>
+  <script src="../../js/carousel.js"></script>
+  <script src="../../js/slideDeck.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lillianzhao – SRTS Walkability Audit</title>
+  <link rel="stylesheet" href="../../css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="../../img/logo.jpg">
+  <script src="/js/loader.js"></script>
+</head>
+
+<header id="navbar" class="navbar">
+  <nav>
+    <ul>
+      <li><a href="../../index.html">home</a></li>
+      <li><a href="../../projects.html">projects</a></li>
+      <li><a href="../../contactMe.html">contact</a></li>
+      <li><a href="../../funsies.html">funsies</a></li>
+    </ul>
+  </nav>
+</header>
+
+<body>
+  <div class="container">
+    <div class="row" style="margin-top: 0%;" id="Projects">
+      <div style="display:flex;">
+        <h2>(City of Pittsburgh)</h2>
+        <h1 style="color:black; font-size: 5.2vw;">Walkability Audit System.</h1>
+        <div class="iconsText">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <i class="fa-solid fa-chart-bar"></i>
+          <i class="fa-solid fa-file-lines"></i>
+        </div>
+      </div>
+      <div class="see-more">
+        <a href="https://srts-report-generation.vercel.app/" target="_blank">
+          <span><i style="color:rgb(255, 220, 46)" class="fa-solid fa-star"></i><u> See Live App</u> &#8594;</span>
+        </a>
+        &nbsp;&nbsp;
+        <a href="https://github.com/lillian-zhao/SRTS-Report-Generation" target="_blank">
+          <span><i style="color:rgb(255, 220, 46)" class="fa-solid fa-star"></i><u> GitHub</u> &#8594;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phone mockup -->
+  <div class="row show" style="margin-top: -2%; flex-direction: column;">
+    <div class="img" style="width:100%; height:auto;">
+      <img src="../../img/srts-phone.jpg" alt="SRTS Report Builder on iPhone" style="object-fit:contain; height:auto; width:100%;">
+    </div>
+  </div>
+
+  <!-- Overview -->
+  <div class="row">
+    <div class="text">
+      <h2>Context.</h2>
+      <p>
+        Safe Routes to School (SRTS) is a program within the City of Pittsburgh's Department of Mobility and
+        Infrastructure (DOMI), focused on creating safer walking and biking environments for Pittsburgh Public School
+        students. The entire program is managed by a single coordinator, Harriet Jackson, who oversees walkability
+        audits, school partnerships, and coordination with city planners, traffic engineers, and PPS transportation
+        staff — all through a predominantly paper-based workflow.
+      </p>
+      <p>
+        Over a semester-long consulting engagement (Jan–Apr 2026), I worked with a team of two other CMU Information
+        Systems students to design and build a two-part digital system replacing SRTS's manual, clipboard-driven audit
+        process. I led the <b>technical implementation</b> of the report generation deliverable — building and deploying
+        the web application end-to-end, including the ArcGIS REST API integration, LLM prompting pipeline, and .docx
+        report templating system.
+      </p>
+    </div>
+  </div>
+
+  <!-- Demo Video -->
+  <div class="row" style="flex-direction: column;">
+    <div class="text">
+      <h2>Demo.</h2>
+    </div>
+    <div style="width:100%; max-width:900px; margin: 0 auto 2rem; aspect-ratio: 16/9;">
+      <iframe
+        width="100%" height="100%"
+        src="https://www.youtube.com/embed/i1RfWWO6syg"
+        title="Walkability Audit Reporting System Demo"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        style="border-radius: 8px; display:block;">
+      </iframe>
+    </div>
+  </div>
+
+  <!-- The Problem -->
+  <div class="row">
+    <div class="text">
+      <h2>The Problem.</h2>
+      <p>
+        The walkability audit process had three interconnected pain points that limited SRTS's reach and advocacy
+        capacity:
+      </p>
+      <p>
+        <b>1. Duplicate data entry.</b> Audit participants documented observations on physical clipboards during site
+        walks. After each visit, Harriet manually transcribed all handwritten notes into a Google Doc — recording every
+        observation twice, often days later when handwriting was hard to read.
+      </p>
+      <p>
+        <b>2. Manual report compilation.</b> When city council or DOMI teams requested audit findings to evaluate
+        infrastructure funding, Harriet had to manually compile scattered notes into coherent stakeholder reports.
+        A process taking multiple days meant SRTS couldn't respond quickly when decisions were being made.
+      </p>
+      <p>
+        <b>3. Inaccessible historical data.</b> Past audit data was scattered across Google Docs, email threads, and
+        physical storage boxes with no consistent structure. Harriet couldn't easily answer: which schools have the most
+        persistent safety concerns? Are conditions improving after infrastructure investments?
+      </p>
+    </div>
+  </div>
+
+  <!-- Deliverable 1 -->
+  <div class="row" style="flex-direction: column">
+    <div class="text">
+      <h2>Deliverable 1 — ArcGIS Survey123 Forms.</h2>
+      <div class="see-more">
+        <a href="https://arcg.is/1HfK9r3" target="_blank">
+          <span><i style="color:rgb(255, 220, 46)" class="fa-solid fa-star"></i><u> Post-Survey Form</u> &#8594;</span>
+        </a>
+        &nbsp;&nbsp;
+        <a href="https://arcg.is/1uWSHG2" target="_blank">
+          <span><i style="color:rgb(255, 220, 46)" class="fa-solid fa-star"></i><u> Pre-Survey Form</u> &#8594;</span>
+        </a>
+      </div>
+      <p>
+        Replaces paper clipboards with a structured two-part digital workflow built on ArcGIS Survey123, using
+        Harriet's existing DOMI license — eliminating new software costs and IT dependencies.
+      </p>
+      <p>
+        The <b>pre-survey</b> is sent to school staff before the audit walk. It captures student transportation patterns,
+        known safety concerns along common walking routes, and school-specific context — so the audit team arrives
+        already informed.
+      </p>
+      <p>
+        The <b>post-survey</b> is completed by audit participants after the walk, with <b>role-specific question
+        branching</b> across five participant types: SRTS Coordinator, City Planner, Traffic Engineer, PPS
+        Transportation, and School Staff. Each participant sees only the questions relevant to their role,
+        reducing cognitive load and improving data completeness.
+      </p>
+      <p>
+        A controlled dropdown of <b>46 Pittsburgh public elementary and middle schools</b> (pulled from a live ArcGIS
+        hosted feature layer) enforces consistent naming across every submission — the foundational requirement for any
+        future cross-audit analysis.
+      </p>
+    </div>
+  </div>
+
+  <!-- Survey Before/After -->
+  <div class="row">
+    <div class="text">
+      <h2>Before vs. After — Data Collection.</h2>
+      <table class="case-table">
+        <thead>
+          <tr>
+            <th style="width:50%;">Before</th>
+            <th>After</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Physical clipboards &amp; printed checklists during site walks</td>
+            <td>Digital Survey123 forms completed on participants' phones after the walk</td>
+          </tr>
+          <tr>
+            <td>Harriet manually transcribed handwritten notes into Google Docs</td>
+            <td>Responses automatically stored in ArcGIS hosted feature layers — immediately accessible</td>
+          </tr>
+          <tr>
+            <td>Single form for all roles — inconsistent, incomplete data</td>
+            <td>Role-specific branching across 5 participant types — everyone sees only relevant questions</td>
+          </tr>
+          <tr>
+            <td>No controlled vocabulary — school names entered inconsistently</td>
+            <td>Controlled dropdown of 46 Pittsburgh public schools enforces consistent naming</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Deliverable 2 -->
+  <div class="row" style="flex-direction: column">
+    <div class="text">
+      <h2>Deliverable 2 — Report Generation Web App.</h2>
+      <div class="see-more">
+        <a href="https://srts-report-generation.vercel.app/" target="_blank">
+          <span><i style="color:rgb(255, 220, 46)" class="fa-solid fa-star"></i><u> Live App</u> &#8594;</span>
+        </a>
+        &nbsp;&nbsp;
+        <a href="https://github.com/lillian-zhao/SRTS-Report-Generation" target="_blank">
+          <span><i style="color:rgb(255, 220, 46)" class="fa-solid fa-star"></i><u> GitHub Repo</u> &#8594;</span>
+        </a>
+      </div>
+      <p>
+        A deployed web application that pulls audit responses from ArcGIS via the <b>ArcGIS REST API</b>, passes
+        structured multi-role data to <b>Claude (Anthropic LLM)</b> for synthesis, and generates three
+        audience-specific audit reports as downloadable <b>.docx files — all in under 5 minutes</b>. This replaces
+        a multi-day manual compilation process.
+      </p>
+      <p>Three report formats generated from the same underlying data:</p>
+      <p>
+        <b>DOMI Internal —</b> Technical findings organized by role (Planner, Traffic), infrastructure severity
+        ratings, priority concern summary, and recommended actions tiered by urgency.<br><br>
+        <b>School &amp; Community Partner —</b> Accessible summary of route conditions, transportation data, key
+        findings, and next steps — designed for school administrators and parents.<br><br>
+        <b>General Public —</b> One-page community update with program context, key statistics, and high-level
+        findings for broad distribution.
+      </p>
+      <p>
+        Reports download as editable Word documents so Harriet retains full editorial control. The LLM output is a
+        structured first draft — she remains the authoritative voice on every report that leaves her office.
+      </p>
+    </div>
+  </div>
+
+  <!-- Report gen Before/After -->
+  <div class="row">
+    <div class="text">
+      <h2>Before vs. After — Report Generation.</h2>
+      <table class="case-table">
+        <thead>
+          <tr>
+            <th style="width:50%;">Before</th>
+            <th>After</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Manual compilation of audit notes into reports — multiple days per audit</td>
+            <td>Reports generated in under 5 minutes from a single browser interface</td>
+          </tr>
+          <tr>
+            <td>Single generic format manually reformatted for each stakeholder group</td>
+            <td>3 audience-specific formats generated automatically: DOMI Internal, School &amp; Community, General Public</td>
+          </tr>
+          <tr>
+            <td>No standard schema — comparison across audits was impractical</td>
+            <td>Consistent structured schema enables over-time comparison across every audit</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Pilot Results -->
+  <div class="row">
+    <div class="text">
+      <h2>Pilot Results.</h2>
+      <p>
+        The full system was tested at a live walkability audit at <b>Pittsburgh Morrow Elementary on March 26, 2026</b>
+        — with real city planners, traffic engineers, the SRTS coordinator, PPS transportation staff, and school
+        representatives.
+      </p>
+      <p>
+        <b>7 of 7 participants</b> submitted responses digitally with no prior training on the system.
+        <b>0 paper forms</b> were collected. Real pilot data was subsequently used to generate the first set of reports
+        through the web app, which were reviewed and approved by Harriet Jackson across all three formats.
+      </p>
+      <p>
+        The system is fully handed off and runs independently within Harriet's existing DOMI ArcGIS Online account.
+        No new software licenses were required. Ongoing cost: <b>under $0.05 per report generation</b> in Claude API
+        usage, hosted on Vercel's free tier.
+      </p>
+    </div>
+  </div>
+
+  <!-- Tech Stack -->
+  <div class="row">
+    <div class="text">
+      <h2>Technology Stack.</h2>
+      <p>
+        <b>Data Collection:</b> ArcGIS Survey123 · ArcGIS hosted feature layers · srts_schools controlled vocabulary layer (46 schools)<br><br>
+        <b>Report Generation:</b> ArcGIS REST API (data pull) · Claude / Anthropic API (LLM synthesis) · python-docx (.docx generation) · Vercel (deployment)<br><br>
+        <b>My Role:</b> Built and deployed the report generation web application end-to-end — ArcGIS REST API integration, LLM prompting pipeline, three .docx report templates, and a developer tools page (/dev) for DOMI IT to verify credentials and inspect the data pipeline independently.
+      </p>
+    </div>
+  </div>
+
+  <div class="row" style="flex-direction: column;">
+    <div class="text">
+      <h2>Presentation.</h2>
+      <p>
+        <a href="../../files/SRTS-Final-Presentation.pdf" target="_blank">
+          <u>Open the full slides (PDF)</u> &#8594;
+        </a>
+      </p>
+    </div>
+    <div class="slide-deck" id="srts-deck" tabindex="0"
+      data-count="14"
+      data-src="../../img/srts-slides/slide-{n}.jpg"
+      data-label="SRTS presentation slide">
+      <div class="slide-deck-stage">
+        <img src="../../img/srts-slides/slide-01.jpg" alt="SRTS presentation slide 1 of 14">
+        <button type="button" class="slide-deck-nav prev" aria-label="Previous slide">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button type="button" class="slide-deck-nav next" aria-label="Next slide">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+      <div class="slide-deck-bar">
+        <span>1 / 14</span>
+        <div class="slide-deck-dots"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="width:100%; background-color: black;">
+    <h2 style="color:white;">footer.</h2>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="../../js/script.js"></script>
+  <script src="../../js/carousel.js"></script>
+  <script src="../../js/slideDeck.js"></script>
+
+</body>
+
+</html>

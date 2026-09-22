@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lillianzhao – Open Photos</title>
+  <link rel="stylesheet" href="../../css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link rel="icon" href="../../img/logo.jpg">
+  <script src="/js/loader.js"></script>
+</head>
+
+<header id="navbar" class="navbar">
+  <nav>
+    <ul>
+      <li><a href="../../index.html">home</a></li>
+      <li><a href="../../projects.html">projects</a></li>
+      <li><a href="../../contactMe.html">contact</a></li>
+      <li><a href="../../funsies.html">funsies</a></li>
+    </ul>
+  </nav>
+</header>
+
+<body>
+  <div class="container">
+    <div class="row" style="margin-top: 0%;" id="Projects">
+      <div style="display:flex;">
+        <h2>(TartanHacks)</h2>
+        <h1 style="color:black; font-size: 5.2vw;">Open Photos.</h1>
+        <div class="iconsText">
+          <i class="fa-solid fa-mobile-screen"></i>
+          <i class="fa-solid fa-images"></i>
+          <i class="fa-solid fa-laptop"></i>
+        </div>
+      </div>
+      <div class="see-more">
+        <a href="https://github.com/garias1831/openphotos" target="_blank">
+          <span><i style="color:rgb(255, 220, 46)" class="fa-solid fa-star"></i><u> GitHub</u> &#8594;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row show" style="margin-top: -2%; flex-direction: column;">
+    <div class="img" style="width:100%; height:auto;">
+      <img src="../../img/open-photos.jpg" alt="Open Photos — transferring photos between phone and computer" style="object-fit:contain; height:auto; width:100%;">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text">
+      <h2>Context.</h2>
+      <p>
+        Cloud photo storage is expensive, slow, and often the only way people move pictures between a phone and a
+        computer. Cross-platform transfers are especially messy — Android and macOS already fight each other, and
+        getting a photo library off an iPhone onto a Windows machine is not much better.
+      </p>
+      <p>
+        <b>Open Photos</b> is a TartanHacks 2026 project I built with Kausthub, Opally, and Gabe. It is a phone app
+        for moving images locally between a Windows computer and an iPhone — no cloud subscription, no upload wait,
+        just a direct handoff.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text">
+      <h2>The Problem.</h2>
+      <p>
+        Most “solutions” to photo transfer are cloud products. That means paying for storage you may not want,
+        waiting on uploads, and hoping both devices are signed into the same account. We wanted a local, practical
+        path for people who just need photos to exist on the other device.
+      </p>
+    </div>
+  </div>
+
+  <div class="row show" style="flex-direction: column;">
+    <div class="text">
+      <h2>Implementation.</h2>
+      <p>
+        The iPhone app talks to a local photo server. Once connected, the same files show up in a Windows
+        <b>PhotoLibrary</b> folder — no cloud upload required.
+      </p>
+      <figure class="impl-shot-demo">
+        <img src="../../img/open-photos-shots/demo.gif" alt="Open Photos demo: connecting and syncing the photo library">
+        <figcaption>Connecting to the local server and syncing the library</figcaption>
+      </figure>
+      <div class="impl-shots">
+        <figure>
+          <img src="../../img/open-photos-shots/photos.png" alt="Open Photos library on iPhone">
+          <figcaption>Photos library on iPhone</figcaption>
+        </figure>
+        <figure>
+          <img src="../../img/open-photos-shots/settings.png" alt="Open Photos settings screen">
+          <figcaption>Settings — connected to the local server</figcaption>
+        </figure>
+      </div>
+      <figure class="impl-shot-wide">
+        <img src="../../img/open-photos-shots/folder.png" alt="PhotoLibrary folder on Windows">
+        <figcaption>The same photos in the Windows PhotoLibrary folder</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text">
+      <h2>What's Next.</h2>
+      <p>
+        The hackathon build focused on Windows &harr; iPhone. The roadmap from our pitch:
+      </p>
+      <p>
+        <b>More compatibility</b> — Windows &rarr; Android and a more complete Windows &harr; iOS path.<br><br>
+        <b>Google Drive, even when the computer is off</b> — optional cloud fallback when a local machine is not
+        available.<br><br>
+        <b>Labels and sorting</b> — more metadata, a stronger sorting algorithm, and more creative ways to browse
+        a transferred library.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="text">
+      <h2>Team.</h2>
+      <p>
+        TartanHacks 2026 &middot; Kausthub, Lillian, Opally, Gabe
+      </p>
+    </div>
+  </div>
+
+  <div class="row" style="width:100%; background-color: black;">
+    <h2 style="color:white;">footer.</h2>
+  </div>
+
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="../../js/script.js"></script>
+  <script src="../../js/carousel.js"></script>
+</body>
+
+</html>

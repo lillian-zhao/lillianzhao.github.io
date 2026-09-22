@@ -5,10 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>lillianzhao</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=18">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   <link rel="icon" href="img/logo.jpg">
+  <script src="/js/loader.js?v=8"></script>
 </head>
 
 <header id="navbar" class="navbar">
@@ -27,25 +28,9 @@
   <section class="hero-section">
     <canvas id="webglCanvas"></canvas>
 
-    <div class="hero-text">
-      <h1>hi. I'm Lillian! &#128075;</h1>
-      <h2>current junior @ Carnegie Mellon University &nbsp;·&nbsp; Tech · Accessibility · Design</h2>
-      <div class="icons">
-        <a href="https://www.linkedin.com/in/lillian-zhao-865383225/" target="_blank" aria-label="LinkedIn">
-          <i class="fab fa-linkedin"></i>
-        </a>
-        <a href="https://github.com/lillian-zhao" target="_blank" aria-label="GitHub">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="mailto:lillian.m.zhao@gmail.com" aria-label="Email">
-          <i class="fas fa-envelope"></i>
-        </a>
-      </div>
-    </div>
-
     <div class="drag-hint">
       <i class="fas fa-hand-pointer"></i>
-      drag the items on the desk!
+      click around
     </div>
 
     <div class="scroll-arrow">
@@ -103,7 +88,6 @@
       </div>
     </div>
     <div class="row" id="Projects">
-      <div class="line"></div>
       <div style="display:flex;">
         <h2>(some of)</h2>
         <h1 style="color:black">My Projects.</h1>
@@ -114,41 +98,46 @@
         </div>
       </div>
       <div class="card-container">
-        <div class="card">
-          <img src="img/card1.png" alt="Card 1">
-          <div class="card-content">
-            <h3>2023_ CJ Ministry</h3>
-            <p>Iterated and built a website from scratch for local Pittsburgh
-              nonprofit CJ Ministry.</p>
+        <a class="card-link" href="pages/projects/srts.html">
+          <div class="card">
+            <img src="img/srts-phone-card.jpg" alt="Walkability Audit System">
+            <div class="card-content">
+              <h3>2026_ Walkability Audit</h3>
+              <p>Report system for Pittsburgh Safe Routes to School walkability
+                audits, built with the City of Pittsburgh.</p>
+            </div>
           </div>
-        </div>
+        </a>
 
-        <div class="card">
-          <img src="img/card2.png" alt="Card 2">
-          <div class="card-content">
-            <h3>2024_ CMU IS Projects</h3>
-            <p>Collaborated with Carnegie Mellon University Information
-              Systems Department to fabricate the IS Projects Website</p>
+        <a class="card-link" href="pages/projects/openPhotos.html">
+          <div class="card">
+            <img src="img/open-photos-card.jpg" alt="Open Photos">
+            <div class="card-content">
+              <h3>2026_ Open Photos</h3>
+              <p>TartanHacks 2026 — a local iPhone-to-Windows photo transfer
+                app, no cloud required.</p>
+            </div>
           </div>
-        </div>
+        </a>
 
-        <div class="card">
-          <img src="img/card3.png" alt="Card 3">
-          <div class="card-content">
-            <h3>2024_ Magazine Spread</h3>
-            <p>Final Project in my Design Class aimed to teach the fundamentals
-              of print and web design.
-            </p>
-          </div>
-        </div>
-        <!-- See More Section -->
-        <a href="projects.html">
-          <div class="see-more">
-            <span>See More</span>
-            <div class="arrow">&#8594;</div>
+        <a class="card-link" href="pages/projects/oizys.html">
+          <div class="card">
+            <img src="img/oizys-card.jpg" alt="Oizys">
+            <div class="card-content">
+              <h3>2025_ Oizys</h3>
+              <p>A wearable stress bracelet designed and built for CMU’s
+                Designing for the Internet of Things.</p>
+            </div>
           </div>
         </a>
       </div>
+      <!-- See More Section -->
+      <a href="projects.html">
+        <div class="see-more">
+          <span>See More</span>
+          <div class="arrow">&#8594;</div>
+        </div>
+      </a>
     </div>
     <div class="row" id="Projects">
       <div style="display:flex;">
@@ -160,7 +149,7 @@
           <i class="fa-solid fa-palette"></i>
         </div>
       </div>
-      <div class="image-card-container">
+      <div class="image-card-container art-row">
         <div class="image-card">
           <img src="img/toronto/to1.jpg" alt="Card 1">
         </div>
@@ -193,8 +182,8 @@
 
   <!-- WebGL and Lenis Script -->
   <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/script.js"></script> <!-- Link to your external JS file -->
-  <script src="js/canvasScript.js"></script>
+  <script src="js/script.js?v=14"></script>
+  <script src="js/canvasScript.js?v=14"></script>
 </body>
 
 </html>
