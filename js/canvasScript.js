@@ -6,13 +6,16 @@ window.addEventListener('DOMContentLoaded', () => {
   var _isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
-    antialias: true,
-    alpha: true
+    antialias: !_isCoarse,
+    alpha: true,
+    powerPreference: 'high-performance'
   });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, _isCoarse ? 1 : 1.5));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.autoUpdate = false;
+  renderer.shadowMap.needsUpdate = true;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 0.68;
 
@@ -584,6 +587,57 @@ window.addEventListener('DOMContentLoaded', () => {
   shadeInner.position.copy(lampShade.position);
   lampHead.add(shadeInner);
 
+  // Pull cord — hangs from the shade lip toward the camera; click to toggle the lamp
+  var PULL_REST  = 0.58;
+  var PULL_EXTRA = 0.17;
+  var pullGroup  = new THREE.Group();
+  pullGroup.position.set(-0.36, -0.30, 0.17);
+  lampHead.add(pullGroup);
+
+  var pullRing = mkMesh(new THREE.TorusGeometry(0.013, 0.0036, 8, 12), 0xb8942a, { roughness: 0.35, metalness: 0.7 });
+  pullRing.rotation.x = Math.PI / 2;
+  pullRing.castShadow = false;
+  pullRing.receiveShadow = false;
+  pullGroup.add(pullRing);
+
+  var pullCord = mkMesh(new THREE.CylinderGeometry(0.0045, 0.0045, 1, 8), 0x3d2a1c, { roughness: 0.92 });
+  pullCord.castShadow = false;
+  pullCord.receiveShadow = false;
+  pullGroup.add(pullCord);
+
+  var pullKnob = mkMesh(
+    new THREE.SphereGeometry(0.028, 12, 10), 0xd4a017,
+    { roughness: 0.32, metalness: 0.72, emissive: 0x553300, emissiveIntensity: 0.28 }
+  );
+  pullKnob.castShadow = false;
+  var pullTip = mkMesh(new THREE.ConeGeometry(0.015, 0.026, 10), 0xc4920f, { roughness: 0.32, metalness: 0.72 });
+  pullTip.rotation.x = Math.PI;
+  pullTip.castShadow = false;
+  pullGroup.add(pullKnob);
+  pullGroup.add(pullTip);
+
+  var pullHit = new THREE.Mesh(
+    new THREE.SphereGeometry(0.10, 8, 6),
+    new THREE.MeshBasicMaterial({ visible: false })
+  );
+  pullGroup.add(pullHit);
+  var _pullMeshes = [pullCord, pullKnob, pullTip, pullHit, pullRing];
+
+  function setPullLen(len) {
+    pullCord.scale.y = len;
+    pullCord.position.y = -len / 2;
+    pullKnob.position.y = -len;
+    pullTip.position.y = -len - 0.022;
+    pullHit.position.y = -len;
+  }
+  setPullLen(PULL_REST);
+
+  var _lampOn     = true;
+  var _lampLit    = 1;
+  var _pullAmount = 0;
+  var _pullPhase  = 0; // 0 idle, 1 stretching down, 2 springing back
+  var _pullHovered = false;
+
   lampGroup.add(lampHead);
 
   lampGroup.position.set(2.1, 0, -0.8);
@@ -658,11 +712,14 @@ window.addEventListener('DOMContentLoaded', () => {
   // Intro vs desktop: about window is the default; red X closes it to the
   // clock/photo/loading desktop. Double-click (or click) aboutme.txt to reopen.
   var _screenMode        = 'about';  // 'about' | 'desktop'
-  var _hoverUI           = null;     // 'close' | 'aboutfile' | 0 | 1 | 2 (link idx)
+  var _hoverUI           = null;     // 'close' | 'aboutfile' | 'term0'.. | 0 | 1 | 2
   var _screenLinks       = [];
   var _closeHit          = { x: 0, y: 0, w: 0, h: 0 };
   var _photoHit          = { x: 0, y: 0, w: 0, h: 0 };
   var _aboutFileHit      = { x: 0, y: 0, w: 0, h: 0 };
+  var _termHits          = [];
+  var _termEcho          = '';
+  var _termNav           = false;
 
   // Dirty flag: skip the expensive 1280×960 redraw + GPU upload when nothing changed.
   var _screenDirty = true;
@@ -931,7 +988,7 @@ window.addEventListener('DOMContentLoaded', () => {
     _fillScreenBg();
 
     // ════════════════════════════════════════════════════════════════════════
-    // CLOCK popup  (center-right)
+    // CLOCK popup  (bottom strip)
     // ════════════════════════════════════════════════════════════════════════
     var now = new Date();
     var hh  = now.getHours()  .toString().padStart(2, '0');
@@ -945,32 +1002,31 @@ window.addEventListener('DOMContentLoaded', () => {
                   now.getDate() + ',  ' + now.getFullYear();
     var ampm = now.getHours() < 12 ? 'AM' : 'PM';
 
-    var cx = 470, cy = 54, cw = 774, ch = 520;
-    panel(cx, cy, cw, ch, 26);
+    var cx = 44, cy = 508, cw = 396, ch = 340;
+    panel(cx, cy, cw, ch, 16);
 
-    // label
-    ctx.font = 'bold 26px "Courier New", monospace';
+    ctx.font = 'bold 20px "Courier New", monospace';
     ctx.fillStyle = '#4a2a88';
-    ctx.fillText('SYSTEM CLOCK', cx + 30, cy + 52);
+    ctx.fillText('SYSTEM CLOCK', cx + 20, cy + 38);
 
-    // time digits — centered
     var timeStr = hh + colon + mm;
-    ctx.font = 'bold 168px "Courier New", monospace';
+    ctx.font = 'bold 72px "Courier New", monospace';
     ctx.fillStyle = '#1a0e32';
-    var tw = ctx.measureText(timeStr).width;
-    ctx.fillText(timeStr, cx + (cw - tw) / 2, cy + 318);
+    var timeW = ctx.measureText(timeStr).width;
+    ctx.fillText(timeStr, cx + (cw - timeW) / 2, cy + 150);
 
-    // date + am/pm
-    ctx.font = '28px "Courier New", monospace';
-    ctx.fillStyle = '#3a1d6e';
-    ctx.fillText(dateStr, cx + 30, cy + 382);
-    ctx.font = 'bold 42px "Courier New", monospace';
+    ctx.font = 'bold 28px "Courier New", monospace';
     ctx.fillStyle = '#4a2a88';
-    ctx.fillText(ampm, cx + cw - 110, cy + 386);
+    var amW = ctx.measureText(ampm).width;
+    ctx.fillText(ampm, cx + (cw - amW) / 2, cy + 196);
 
-    // thin bottom accent bar
+    ctx.font = '20px "Courier New", monospace';
+    ctx.fillStyle = '#3a1d6e';
+    var dateW = ctx.measureText(dateStr).width;
+    ctx.fillText(dateStr, cx + (cw - dateW) / 2, cy + 250);
+
     ctx.fillStyle = '#c8b8f0';
-    ctx.fillRect(cx + 30, cy + ch - 26, cw - 60, 6);
+    ctx.fillRect(cx + 20, cy + ch - 20, cw - 40, 5);
 
     // ════════════════════════════════════════════════════════════════════════
     // PHOTO POPUP  (top-left) — shows assets/screen-photo.png when present
@@ -1030,50 +1086,79 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     // ════════════════════════════════════════════════════════════════════════
-    // LOADING popup  (bottom strip)
+    // TERMINAL  (center-right) — fake commands cd to other site pages
     // ════════════════════════════════════════════════════════════════════════
-    var lx = 44, ly = 726, lw = 880, lh = 204;
-    panel(lx, ly, lw, lh, 20);
+    var tx = 470, ty = 54, tw = 774, th = 520;
+    var TERM_BG = '#07140a', TERM_FG = '#3cff6a', TERM_DIM = '#1f8a3c', TERM_HOT = '#c8ff9a';
 
-    ctx.font = 'bold 26px "Courier New", monospace';
-    ctx.fillStyle = '#3a1d6e';
-    ctx.fillText('LOADING SYSTEM FILES...', lx + 24, ly + 48);
-
-    var bx = lx + 24, by = ly + 72, bw = lw - 48, bh = 56;
-    // bar track
-    ctx.fillStyle = '#e6e0f8';
-    _rr(ctx, bx, by, bw, bh, 10);
+    ctx.fillStyle = 'rgba(0,0,0,0.28)';
+    _rr(ctx, tx + 7, ty + 9, tw, th, 20);
     ctx.fill();
-    // animated fill
-    var prog = (Date.now() / 14000) % 1.0;
-    if (prog > 0.005) {
-      ctx.save();
-      _rr(ctx, bx, by, bw * prog, bh, 10);
-      ctx.clip();
-      ctx.fillStyle = '#8060cc';
-      ctx.fillRect(bx, by, bw * prog, bh);
-      // diagonal stripe highlights
-      ctx.strokeStyle = 'rgba(255,255,255,0.28)';
-      ctx.lineWidth = 15;
-      for (var si = -bh; si < bw; si += 28) {
-        ctx.beginPath();
-        ctx.moveTo(bx + si,      by);
-        ctx.lineTo(bx + si + bh, by + bh);
-        ctx.stroke();
+    ctx.fillStyle = TERM_BG;
+    _rr(ctx, tx, ty, tw, th, 20);
+    ctx.fill();
+
+    ctx.fillStyle = '#0c2214';
+    _rr(ctx, tx, ty, tw, 48, 20);
+    ctx.fill();
+    ctx.fillRect(tx, ty + 22, tw, 26);
+
+    [0xff5f57, 0xffbd2e, 0x28c840].forEach(function (c, i) {
+      ctx.fillStyle = '#' + c.toString(16).padStart(6, '0');
+      ctx.beginPath();
+      ctx.arc(tx + tw - 22 - i * 28, ty + 24, 9, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.font = 'bold 24px "Courier New", monospace';
+    ctx.fillStyle = TERM_FG;
+    ctx.fillText('lillian@desk — bash', tx + 20, ty + 32);
+
+    ctx.font = '24px "Courier New", monospace';
+    ctx.fillStyle = TERM_DIM;
+    ctx.fillText('last login: ' + dateStr.toLowerCase(), tx + 26, ty + 88);
+
+    ctx.fillStyle = TERM_FG;
+    ctx.fillText('lillian@desk:~$ pwd', tx + 26, ty + 132);
+    ctx.fillStyle = TERM_DIM;
+    ctx.fillText('/home/lillian', tx + 26, ty + 166);
+
+    ctx.fillStyle = TERM_FG;
+    ctx.fillText('lillian@desk:~$ ls', tx + 26, ty + 210);
+    ctx.fillStyle = TERM_DIM;
+    ctx.fillText('projects.html    contactMe.html    funsies.html', tx + 26, ty + 244);
+
+    var cmds = [
+      { cmd: 'cd projects.html', href: 'projects.html' },
+      { cmd: 'cd contactMe.html', href: 'contactMe.html' },
+      { cmd: 'cd funsies.html', href: 'funsies.html' }
+    ];
+    _termHits = [];
+    var rowY = ty + 304;
+    cmds.forEach(function (c, i) {
+      var row = { x: tx + 18, y: rowY - 32, w: tw - 36, h: 44, href: c.href, cmd: c.cmd };
+      _termHits.push(row);
+      var hot = _hoverUI === ('term' + i);
+      if (hot) {
+        ctx.fillStyle = 'rgba(60,255,106,0.12)';
+        _rr(ctx, row.x, row.y, row.w, row.h, 8);
+        ctx.fill();
       }
-      ctx.restore();
+      ctx.font = 'bold 26px "Courier New", monospace';
+      ctx.fillStyle = TERM_DIM;
+      ctx.fillText('lillian@desk:~$', tx + 26, rowY);
+      ctx.fillStyle = hot ? TERM_HOT : TERM_FG;
+      ctx.fillText(c.cmd, tx + 268, rowY);
+      rowY += 50;
+    });
+
+    ctx.font = '24px "Courier New", monospace';
+    ctx.fillStyle = TERM_FG;
+    var prompt = 'lillian@desk:~$ ' + (_termEcho || '');
+    ctx.fillText(prompt, tx + 26, ty + th - 28);
+    if (!_termEcho && (now.getSeconds() % 2 === 0)) {
+      var pw = ctx.measureText('lillian@desk:~$ ').width;
+      ctx.fillRect(tx + 26 + pw, ty + th - 48, 16, 24);
     }
-    // bar border
-    ctx.strokeStyle = '#9070c0';
-    ctx.lineWidth = 2;
-    _rr(ctx, bx, by, bw, bh, 10);
-    ctx.stroke();
-    // percentage text
-    ctx.font = 'bold 30px "Courier New", monospace';
-    ctx.fillStyle = '#24104a';
-    var pct = Math.round(prog * 100) + '%';
-    var pm = ctx.measureText(pct).width;
-    ctx.fillText(pct, lx + lw / 2 - pm / 2, ly + 166);
 
     // ── Desktop file: aboutme.txt ────────────────────────────────────────────
     var fx = _FILE_ICON.x, fy = _FILE_ICON.y, fw = _FILE_ICON.w, fh = _FILE_ICON.h;
@@ -1391,6 +1476,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
   keyboard.scale.set(1.4, 1.4, 1.4);
   keyboard.position.set(0, DESK_TOP + 1.4 * KB_H / 2 + 0.002, 0.50);
+  // ~70 keycaps casting shadows is a big GPU cost; the case still drops a shadow
+  keyboard.traverse(function(c) {
+    if (!c.isMesh || c === kbCase) return;
+    c.castShadow = false;
+    c.receiveShadow = false;
+  });
   scene.add(keyboard);
 
   // ════════════════════════════════════════════════════════════════════════════
@@ -1782,6 +1873,9 @@ window.addEventListener('DOMContentLoaded', () => {
       return null;
     }
     if (inHit(_aboutFileHit, cx, cy)) return 'aboutfile';
+    for (var t = 0; t < _termHits.length; t++) {
+      if (inHit(_termHits[t], cx, cy)) return 'term' + t;
+    }
     return null;
   }
 
@@ -1834,7 +1928,16 @@ window.addEventListener('DOMContentLoaded', () => {
           hovered = newHovered;
           setHighlight(hovered, true);
         }
-        if (hovered) {
+        var pullHits = raycaster.intersectObjects(_pullMeshes, false);
+        if (_pullHovered !== pullHits.length > 0) {
+          _pullHovered = pullHits.length > 0;
+          setHighlight(pullGroup, _pullHovered);
+        }
+        if (_pullHovered) {
+          if (hovered) { setHighlight(hovered, false); hovered = null; }
+          canvas.style.cursor = 'pointer';
+          setHoverUI(null);
+        } else if (hovered) {
           canvas.style.cursor = 'grab';
           setHoverUI(null);
         } else {
@@ -1893,6 +1996,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
   canvas.addEventListener('mouseleave', function() {
     setHoverUI(null);
+    if (_pullHovered) {
+      setHighlight(pullGroup, false);
+      _pullHovered = false;
+    }
   });
 
   // ── Click handler — colour buttons, pick-up, zoom ───────────────────────────
@@ -1930,6 +2037,17 @@ window.addEventListener('DOMContentLoaded', () => {
         window.open(_screenLinks[ui].url, '_blank');
         return;
       }
+      if (typeof ui === 'string' && ui.indexOf('term') === 0 && !_termNav) {
+        var ti = parseInt(ui.slice(4), 10);
+        var hit = _termHits[ti];
+        if (hit) {
+          _termEcho = hit.cmd;
+          _termNav = true;
+          markScreenDirty();
+          setTimeout(function () { window.location.href = hit.href; }, 280);
+        }
+        return;
+      }
       return; // click on the glass doesn't pass through to the desk
     }
 
@@ -1940,6 +2058,13 @@ window.addEventListener('DOMContentLoaded', () => {
       var _heldHit = raycaster.intersectObjects(_heldMeshes, true);
       if (_heldHit.length === 0) _heldGoal = 0; // missed → put it down
       return; // always block other interactions while holding
+    }
+
+    // 3. Lamp pull cord — stretch down, toggle the desk light, spring back
+    var pullClick = raycaster.intersectObjects(_pullMeshes, false);
+    if (pullClick.length && _pullPhase === 0) {
+      _pullPhase = 1;
+      return;
     }
 
     // 4. Desk objects → pick up (lift toward camera, slight tilt)
@@ -1982,6 +2107,7 @@ window.addEventListener('DOMContentLoaded', () => {
   var _loopActive = false;
   var _heroInView = true;
   var _rafId = 0;
+  var _shadowTick = 0;
 
   function animate() {
     _rafId = 0;
@@ -2052,8 +2178,35 @@ window.addEventListener('DOMContentLoaded', () => {
       p.scale.setScalar(0.75 + t * 1.5);
     });
 
-    lampLight.intensity = 3.10 + Math.sin(clock * 1.8) * 0.14 + Math.sin(clock * 4.3) * 0.06;
-    lampSpot.intensity  = 8.80 + Math.sin(clock * 1.8) * 0.22 + Math.sin(clock * 4.3) * 0.10;
+    // ── Lamp pull-cord animation ────────────────────────────────────────────
+    if (_pullPhase === 1) {
+      _pullAmount += (1 - _pullAmount) * 0.28;
+      if (_pullAmount > 0.90) {
+        _lampOn = !_lampOn;
+        _pullPhase = 2;
+      }
+    } else if (_pullPhase === 2) {
+      _pullAmount += (0 - _pullAmount) * 0.20;
+      if (_pullAmount < 0.015) {
+        _pullAmount = 0;
+        _pullPhase = 0;
+      }
+    }
+    setPullLen(PULL_REST + _pullAmount * PULL_EXTRA);
+    if (_pullPhase === 0) {
+      pullGroup.rotation.x = Math.sin(clock * 1.15) * 0.04;
+      pullGroup.rotation.z = Math.sin(clock * 0.85 + 1.1) * 0.03;
+    } else {
+      pullGroup.rotation.x = 0;
+      pullGroup.rotation.z = 0;
+    }
+
+    _lampLit += ((_lampOn ? 1 : 0) - _lampLit) * 0.14;
+    var flicker = Math.sin(clock * 1.8) * 0.14 + Math.sin(clock * 4.3) * 0.06;
+    lampLight.intensity = _lampLit * (3.10 + flicker);
+    lampSpot.intensity  = _lampLit * (8.80 + flicker * 1.6);
+    shadeInner.material.emissiveIntensity = 0.9 * _lampLit;
+    if (!_pullHovered) pullKnob.material.emissiveIntensity = 0.28 * _lampLit;
     screenGlow.intensity = 0.72 + Math.sin(clock * 0.5) * 0.08;
 
     // CRT texture: redraw only when dirty. About mode is static except hover/clicks;
@@ -2068,6 +2221,11 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     }
     if (_screenDirty) drawCRTScreen();
+
+    _shadowTick++;
+    if (dragged || _heldObj || _pullPhase !== 0 || _shadowTick % 3 === 0) {
+      renderer.shadowMap.needsUpdate = true;
+    }
 
     renderer.render(scene, camera);
   }

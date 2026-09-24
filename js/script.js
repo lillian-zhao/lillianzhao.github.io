@@ -2,11 +2,17 @@ window.addEventListener('DOMContentLoaded', () => {
   // Lenis is optional — skip when the library isn't loaded (projects page, etc.)
   if (typeof Lenis !== 'undefined') {
     const lenis = new Lenis();
+    var _lenisRaf = 0;
     function raf(time) {
+      _lenisRaf = 0;
+      if (document.hidden) return;
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      _lenisRaf = requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden && !_lenisRaf) _lenisRaf = requestAnimationFrame(raf);
+    });
+    _lenisRaf = requestAnimationFrame(raf);
   }
 
   // Intersection Observer to trigger row animations.
