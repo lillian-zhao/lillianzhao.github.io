@@ -29,8 +29,11 @@ function initCarousel(carouselId) {
     slides,
     totalSlides,
     currentSlide,
-    dots: dotsContainer.querySelectorAll('.dot')
+    dots: dotsContainer.querySelectorAll('.dot'),
+    ignoreClick: false
   };
+
+  carousel.setAttribute('data-lenis-prevent', '');
   
   // Set initial position
   updateCarousel(carouselId);
@@ -38,6 +41,10 @@ function initCarousel(carouselId) {
   // Add click handlers for lightbox
   slides.forEach((slide, index) => {
     slide.addEventListener('click', () => {
+      if (carousels[carouselId].ignoreClick) {
+        carousels[carouselId].ignoreClick = false;
+        return;
+      }
       openLightbox(carouselId, index);
     });
   });
@@ -153,44 +160,38 @@ function showLightboxImage() {
   lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${lightboxImages.length}`;
 }
 
-// Add touch/swipe support
+// Add touch/swipe support (keeps dots + arrows)
 function addTouchSupport(carouselId) {
   const carousel = document.getElementById(carouselId);
-  const track = carousel.querySelector('.carousel-track');
-  
+  const surface = carousel.querySelector('.carousel-container') || carousel.querySelector('.carousel-track');
+  if (!surface) return;
+
   let startX = 0;
-  let currentX = 0;
-  let isDragging = false;
-  
-  track.addEventListener('touchstart', (e) => {
+  let startY = 0;
+
+  surface.addEventListener('touchstart', function (e) {
     startX = e.touches[0].clientX;
-    isDragging = true;
-  });
-  
-  track.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    currentX = e.touches[0].clientX;
-    e.preventDefault();
-  });
-  
-  track.addEventListener('touchend', () => {
-    if (!isDragging) return;
-    
-    const diff = startX - currentX;
-    const threshold = 50; // Minimum swipe distance
-    
-    if (Math.abs(diff) > threshold) {
-      if (diff > 0) {
-        // Swipe left - next slide
-        moveCarousel(carouselId, 1);
-      } else {
-        // Swipe right - previous slide
-        moveCarousel(carouselId, -1);
-      }
+    startY = e.touches[0].clientY;
+    if (carousels[carouselId]) carousels[carouselId].ignoreClick = false;
+  }, { passive: true });
+
+  surface.addEventListener('touchmove', function (e) {
+    var dx = e.touches[0].clientX - startX;
+    var dy = e.touches[0].clientY - startY;
+    if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) {
+      e.preventDefault();
     }
-    
-    isDragging = false;
-  });
+  }, { passive: false });
+
+  surface.addEventListener('touchend', function (e) {
+    var t = e.changedTouches[0];
+    var dx = t.clientX - startX;
+    var dy = t.clientY - startY;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      if (carousels[carouselId]) carousels[carouselId].ignoreClick = true;
+      moveCarousel(carouselId, dx < 0 ? 1 : -1);
+    }
+  }, { passive: true });
 }
 
 // Add keyboard support
@@ -278,6 +279,22 @@ document.addEventListener('DOMContentLoaded', function() {
         closeLightbox();
       }
     });
+
+    var lbStartX = 0;
+    var lbStartY = 0;
+    lightbox.addEventListener('touchstart', function (e) {
+      if (!lightbox.classList.contains('active')) return;
+      lbStartX = e.touches[0].clientX;
+      lbStartY = e.touches[0].clientY;
+    }, { passive: true });
+    lightbox.addEventListener('touchend', function (e) {
+      if (!lightbox.classList.contains('active')) return;
+      var t = e.changedTouches[0];
+      var dx = t.clientX - lbStartX;
+      var dy = t.clientY - lbStartY;
+      if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
+      changeLightboxImage(dx < 0 ? 1 : -1);
+    }, { passive: true });
   }
 
   document.querySelectorAll('.impl-process [data-lb]').forEach(function(btn) {

@@ -10,7 +10,6 @@ window.addEventListener('DOMContentLoaded', () => {
     alpha: true,
     powerPreference: 'high-performance'
   });
-  renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, _isCoarse ? 1 : 1.5));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -24,8 +23,20 @@ window.addEventListener('DOMContentLoaded', () => {
   // Frontal/eye-level framing — camera sits at desk-top height, slightly elevated,
   // looking slightly downward toward the desk surface.
   const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 100);
-  camera.position.set(0, 1.60, 2.65);
-  camera.lookAt(0, 0.55, -0.5);
+  function frameCamera() {
+    var mobile = window.innerWidth <= 800;
+    camera.position.set(0, 1.60, mobile ? 3.2 : 2.65);
+    camera.lookAt(0, 0.55, -0.5);
+  }
+  function sizeRenderer() {
+    var w = canvas.clientWidth || window.innerWidth;
+    var h = canvas.clientHeight || window.innerHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  frameCamera();
+  sizeRenderer();
 
   // ── Lighting ─────────────────────────────────────────────────────────────────
   // Warm candlelight ambient — shadows stay readable but feel toasty
@@ -400,7 +411,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Pin holes (small flat circles pressed into cork)
   [
-    [-0.52, 0.34], [0.24, 0.30], [0.60, 0.08],
+    [-0.62, 0.16], [0.24, 0.30], [0.60, 0.08],
     [-0.20, -0.10], [0.38, -0.26], [-0.60, -0.22],
     [0.62,  0.36], [-0.36, 0.12],
   ].forEach(function(hp) {
@@ -414,7 +425,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Coloured pins
   [
-    { dx: -0.52, dy:  0.34, col: 0xff3333 },
+    { dx: -0.62, dy:  0.16, col: 0xff3333 },
     { dx:  0.24, dy:  0.30, col: 0x3399ff },
     { dx:  0.60, dy:  0.08, col: 0xffcc00 },
     { dx: -0.20, dy: -0.10, col: 0x44dd88 },
@@ -502,7 +513,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // 2×2 grid pinned to cork board — each image slightly tilted like the old sticky notes
   var _FS = 0.62;  // image size (square)
-  addWallPhotoFrame(2.04, 1.26, _FS, _FS, 0, -0.07); // top-left
+  addWallPhotoFrame(1.72, 1.42, _FS, _FS, 0, -0.07); // top-left — overlaps the red pin
   addWallPhotoFrame(2.76, 1.26, _FS, _FS, 1,  0.08); // top-right
   addWallPhotoFrame(2.04, 0.54, _FS, _FS, 2, -0.05); // bottom-left
   addWallPhotoFrame(2.76, 0.54, _FS, _FS, 3,  0.10); // bottom-right
@@ -2254,8 +2265,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // ── Resize ──────────────────────────────────────────────────────────────────────
   window.addEventListener('resize', function() {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    sizeRenderer();
+    frameCamera();
   });
 });
