@@ -121,15 +121,13 @@ window.addEventListener('DOMContentLoaded', () => {
   // Intersection Observer to trigger row animations.
   // Tall rows (GIF + screenshots) can be taller than the viewport, so a
   // fixed 0.45 threshold would never fire — they stay opacity:0 forever.
-  // Funsies stacks two carousels per row on mobile; using the same
-  // 35%-of-viewport cover leaves a long white gap before the pair fades in.
+  // On mobile, reveal sooner so you don't scroll through a long white gap.
   const rows = document.querySelectorAll('.row');
   const vh = window.innerHeight || 800;
   const mobile = window.innerWidth <= 768;
   rows.forEach(row => {
     const h = Math.max(row.offsetHeight, 1);
-    const carouselRow = mobile && row.querySelector('.instagram-carousel');
-    const cover = carouselRow ? 0.16 : 0.35;
+    const cover = mobile ? 0.16 : 0.35;
     const threshold = Math.min(0.45, Math.max(0.04, (vh * cover) / h));
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
@@ -140,7 +138,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     }, {
       threshold,
-      rootMargin: carouselRow ? '0px 0px 70px 0px' : '0px'
+      rootMargin: mobile ? '0px 0px 70px 0px' : '0px'
     });
     observer.observe(row);
   });

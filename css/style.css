@@ -618,6 +618,7 @@ h3 {
   }
   .contact-links-title {
     font-size: 2.25rem;
+    margin-top: 0.8em;
   }
 }
 
@@ -854,17 +855,31 @@ body {
 @media (min-width: 900px) {
   .row.contact-row {
     display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-areas:
-      "photo intro"
-      "photo links";
+    grid-template-columns: 4fr 3fr 3fr;
+    grid-template-areas: "photo intro links";
     align-items: start;
+    column-gap: 1.25rem;
   }
-  .contact-photo { grid-area: photo; }
-  .contact-intro { grid-area: intro; }
+  .contact-photo {
+    grid-area: photo;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+  }
+  .contact-intro {
+    grid-area: intro;
+    margin-left: 0 !important;
+    padding-left: 2.25rem;
+    min-width: 0;
+  }
   .contact-links-block {
     grid-area: links;
-    margin-left: 5%;
+    margin-left: 0;
+    min-width: 0;
+  }
+  .contact-intro h2,
+  .contact-links-title {
+    margin-top: 0;
   }
 }
 
@@ -889,8 +904,8 @@ body {
   font-size: 1.25vw;
 }
 .contact-links-title {
-  font-size: 3vw;
-  margin: 0.8em 0 0.35em;
+  font-size: 4vw;
+  margin: 0 0 0.35em;
 }
 
 @media (max-width: 899px) {
