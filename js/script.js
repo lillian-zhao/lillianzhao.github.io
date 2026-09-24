@@ -121,14 +121,18 @@ window.addEventListener('DOMContentLoaded', () => {
   // Intersection Observer to trigger row animations.
   // Tall rows (GIF + screenshots) can be taller than the viewport, so a
   // fixed 0.45 threshold would never fire — they stay opacity:0 forever.
-  // On mobile, reveal sooner so you don't scroll through a long white gap.
+  // On mobile, fire as soon as a row nears the fold. Do not derive the
+  // threshold from offsetHeight — images often have not loaded yet, which
+  // makes short rows get a high threshold that stays wrong after they grow.
   const rows = document.querySelectorAll('.row');
   const vh = window.innerHeight || 800;
-  const mobile = window.innerWidth <= 768;
+  const mobile = window.innerWidth <= 899;
   rows.forEach(row => {
+    if (row.classList.contains('footer-row') || row.classList.contains('show')) return;
     const h = Math.max(row.offsetHeight, 1);
-    const cover = mobile ? 0.16 : 0.35;
-    const threshold = Math.min(0.45, Math.max(0.04, (vh * cover) / h));
+    const threshold = mobile
+      ? 0.01
+      : Math.min(0.45, Math.max(0.04, (vh * 0.35) / h));
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -138,7 +142,7 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     }, {
       threshold,
-      rootMargin: mobile ? '0px 0px 70px 0px' : '0px'
+      rootMargin: mobile ? '80px 0px 50% 0px' : '0px'
     });
     observer.observe(row);
   });

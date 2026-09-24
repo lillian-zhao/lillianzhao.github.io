@@ -1890,16 +1890,32 @@ window.addEventListener('DOMContentLoaded', () => {
     return null;
   }
 
+  var _usingTouch = false;
+
+  function startHeldRotation(x, y) {
+    if (!_heldObj) return false;
+    _isRotating = true;
+    _rotPrevX = x;
+    _rotPrevY = y;
+    return true;
+  }
+
+  function applyHeldRotation(x, y) {
+    if (!_isRotating || !_heldObj) return;
+    _heldUserRotY += (x - _rotPrevX) * 0.008;
+    _heldUserRotX += (y - _rotPrevY) * 0.008;
+    _rotPrevX = x;
+    _rotPrevY = y;
+  }
+
   canvas.addEventListener('mousemove', function(e) {
+    if (_usingTouch) return;
     var _dx = e.clientX - _mdX, _dy = e.clientY - _mdY;
     if (_dx * _dx + _dy * _dy > 36) _didDrag = true; // 6 px threshold
 
     // ── Rotate held object while mouse button is held ─────────────────────
     if (_isRotating && _heldObj) {
-      _heldUserRotY += (e.clientX - _rotPrevX) * 0.008;
-      _heldUserRotX += (e.clientY - _rotPrevY) * 0.008;
-      _rotPrevX = e.clientX;
-      _rotPrevY = e.clientY;
+      applyHeldRotation(e.clientX, e.clientY);
       canvas.style.cursor = 'grabbing';
       return;
     }
@@ -1969,11 +1985,10 @@ window.addEventListener('DOMContentLoaded', () => {
   canvas.addEventListener('mousedown', function(e) {
     _mdX = e.clientX; _mdY = e.clientY; _didDrag = false;
 
+    if (_usingTouch) return;
     // If an object is held, the mouse button starts a rotation gesture
     if (_heldObj) {
-      _isRotating = true;
-      _rotPrevX = e.clientX;
-      _rotPrevY = e.clientY;
+      startHeldRotation(e.clientX, e.clientY);
       return;
     }
 
@@ -2004,6 +2019,32 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     canvas.style.cursor = _heldObj ? 'grab' : 'default';
   });
+
+  canvas.addEventListener('touchstart', function(e) {
+    if (!_heldObj || !e.touches.length) return;
+    var t = e.touches[0];
+    _usingTouch = true;
+    _mdX = t.clientX;
+    _mdY = t.clientY;
+    _didDrag = false;
+    startHeldRotation(t.clientX, t.clientY);
+  }, { passive: true });
+
+  canvas.addEventListener('touchmove', function(e) {
+    if (!_isRotating || !_heldObj || !e.touches.length) return;
+    var t = e.touches[0];
+    var dx = t.clientX - _mdX, dy = t.clientY - _mdY;
+    if (dx * dx + dy * dy > 36) _didDrag = true;
+    applyHeldRotation(t.clientX, t.clientY);
+    e.preventDefault();
+  }, { passive: false });
+
+  function endTouchRotate() {
+    _isRotating = false;
+    setTimeout(function () { _usingTouch = false; }, 400);
+  }
+  canvas.addEventListener('touchend', endTouchRotate);
+  canvas.addEventListener('touchcancel', endTouchRotate);
 
   canvas.addEventListener('mouseleave', function() {
     setHoverUI(null);
@@ -2090,6 +2131,7 @@ window.addEventListener('DOMContentLoaded', () => {
         _heldObj  = obj;
         _heldT    = 0;
         _heldGoal = 1;
+        canvas.style.touchAction = 'none';
         setHighlight(obj, false);
         return;
       }
@@ -2107,6 +2149,7 @@ window.addEventListener('DOMContentLoaded', () => {
         _heldObj  = grp;
         _heldT    = 0;
         _heldGoal = 1;
+        canvas.style.touchAction = 'none';
         return;
       }
     }
@@ -2169,6 +2212,7 @@ window.addEventListener('DOMContentLoaded', () => {
         _heldNoRotate = false;
         _heldUserRotY = 0;
         _heldUserRotX = 0;
+        canvas.style.touchAction = '';
       }
     } else {
       // No object held — fade examine light out
